@@ -36,7 +36,8 @@ esac
 case $platform in 
     centos|redhat) user=apache;group=apache;;
     ubuntu) user=www-data;group=www-data;;
-    other)echo Unrecognized plat form $platform_info; exit 1;;
+    #other)echo Unrecognized plat form $platform_info; exit 1;;
+    other) user=www-data;group=www-data;;
 esac
 
 # change folder permission and add user to the apache group

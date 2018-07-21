@@ -71,19 +71,20 @@ def SubmitJobToQueue(jobid, datapath, outpath, numseq, numseq_this_user, email, 
     myfunc.WriteFile("Entering SubmitJobToQueue()\n", g_params['debugfile'],
             "a", True)
     fafile = "%s/query.fa"%(datapath)
+    varfile = "%s/variants.fa"%(datapath)
 
     if numseq == -1:
         numseq = myfunc.CountFastaSeq(fafile)
     if numseq_this_user == -1:
         numseq_this_user = numseq
 
-    name_software = "subcons"
+    name_software = "pathopred"
     runjob = "%s %s/run_job.py"%(python_exec, rundir)
     scriptfile = "%s/runjob;%s;%s;%s;%s;%d.sh"%(outpath, name_software, jobid, host_ip, email, numseq)
     code_str_list = []
     code_str_list.append("#!/bin/bash")
     code_str_list.append("source %s/bin/activate"%(virt_env_path))
-    cmdline = "%s %s -outpath %s -tmpdir %s -jobid %s "%(runjob, fafile, outpath, datapath, jobid)
+    cmdline = "%s %s %s -outpath %s -tmpdir %s -jobid %s "%(runjob, fafile, varfile, outpath, datapath, jobid)
     if email != "":
         cmdline += "-email \"%s\" "%(email)
     if base_www_url != "":
@@ -111,9 +112,11 @@ def SubmitJobToQueue(jobid, datapath, outpath, numseq, numseq_this_user, email, 
     myfunc.WriteFile("priority=%d\n"%(priority), g_params['debugfile'], "a",
             True)
 
-    st1 = SubmitSuqJob(suq_basedir, datapath, outpath, priority, scriptfile)
+    ## Do not invoke suq -- be satisfied with only creating job folder with files
+    #st1 = SubmitSuqJob(suq_basedir, datapath, outpath, priority, scriptfile)
+    #return st1
+    return 0
 
-    return st1
 #}}}
 def SubmitSuqJob(suq_basedir, datapath, outpath, priority, scriptfile):#{{{
     myfunc.WriteFile("Entering SubmitSuqJob()\n", g_params['debugfile'], "a",

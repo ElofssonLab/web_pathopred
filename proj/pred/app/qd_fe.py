@@ -470,6 +470,7 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
     fafile = "%s/query.fa"%(rstdir)
     split_seq_dir = "%s/splitaa"%(tmpdir)
     forceruntagfile = "%s/forcerun"%(rstdir)
+    variant_file = "%s/variants.fa"%(rstdir)
 
     finished_idx_list = []
     failed_idx_list = []    # [origIndex]
@@ -620,10 +621,14 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                 isSubmitSuccess = False
                 if len(seq) > 0:
                     query_para = {}
-                    if wsdl_url.find("commonbackend") != -1:
-                        query_para['name_software'] = "docker_subcons"
-                    else:
-                        query_para['name_software'] = "subcons"
+                    #if wsdl_url.find("commonbackend") != -1:
+                    #    query_para['name_software'] = "docker_subcons"
+                    #else:
+                    #    query_para['name_software'] = "subcons"
+                    query_para['name_software'] = "pathopred"
+                    #include variants as a query parameter
+                    variant_text = myfunc.ReadFile(variant_file)
+                    query_para['variants'] = variant_text
 
                     para_str = json.dumps(query_para, sort_keys=True)
                     jobname = ""

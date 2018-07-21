@@ -305,6 +305,7 @@ def submit_seq(request):#{{{
             jobname = request.POST['jobname']
             email = request.POST['email']
             rawseq = request.POST['rawseq'] + "\n" # force add a new line
+            variants = request.POST['variants'] #also POST variants from form
             Nfix = ""
             Cfix = ""
             fix_str = ""
@@ -333,6 +334,7 @@ def submit_seq(request):#{{{
             date = time.strftime("%Y-%m-%d %H:%M:%S")
             query = {}
             query['rawseq'] = rawseq
+            query['variants'] = variants
             query['seqfile'] = seqfile
             query['email'] = email
             query['jobname'] = jobname
@@ -347,6 +349,8 @@ def submit_seq(request):#{{{
             query['username'] = username
 
             is_valid = webserver_common.ValidateQuery(request, query, g_params)
+
+            #We should add validation for the variants as well below
 
             if is_valid:
                 jobid = RunQuery(request, query)
@@ -601,6 +605,9 @@ def RunQuery(request, query):#{{{
     warnfile = "%s/warn.txt"%(tmpdir)
     logfile = "%s/runjob.log"%(rstdir)
 
+    variantfile_t = "%s/variants.fa"%(tmpdir)
+    variantfile_r = "%s/variants.fa"%(rstdir)
+
     myfunc.WriteFile("tmpdir = %s\n"%(tmpdir), logfile, "a")
 
     jobinfo_str = "%s\t%s\t%s\t%s\t%d\t%s\t%s\t%s\n"%(query['date'], jobid,
@@ -611,6 +618,10 @@ def RunQuery(request, query):#{{{
     errmsg.append(myfunc.WriteFile(query['rawseq'], rawseqfile, "w"))
     errmsg.append(myfunc.WriteFile(query['filtered_seq'], seqfile_t, "w"))
     errmsg.append(myfunc.WriteFile(query['filtered_seq'], seqfile_r, "w"))
+
+    errmsg.append(myfunc.WriteFile(query['variants'], variantfile_t, "w"))
+    errmsg.append(myfunc.WriteFile(query['variants'], variantfile_r, "w"))
+
     base_www_url = "http://" + request.META['HTTP_HOST']
     query['base_www_url'] = base_www_url
 
@@ -646,6 +657,10 @@ def RunQuery_wsdl(rawseq, filtered_seq, seqinfo):#{{{
     seqfile_t = "%s/query.fa"%(tmpdir)
     seqfile_r = "%s/query.fa"%(rstdir)
     warnfile = "%s/warn.txt"%(tmpdir)
+
+    variantfile_t = "%s/variants.fa"%(tmpdir)
+    variantfile_r = "%s/variants.fa"%(rstdir)
+
     jobinfo_str = "%s\t%s\t%s\t%s\t%d\t%s\t%s\t%s\n"%(seqinfo['date'], jobid,
             seqinfo['client_ip'], seqinfo['numseq'],
             len(rawseq),seqinfo['jobname'], seqinfo['email'],
@@ -654,6 +669,8 @@ def RunQuery_wsdl(rawseq, filtered_seq, seqinfo):#{{{
     errmsg.append(myfunc.WriteFile(rawseq, rawseqfile, "w"))
     errmsg.append(myfunc.WriteFile(filtered_seq, seqfile_t, "w"))
     errmsg.append(myfunc.WriteFile(filtered_seq, seqfile_r, "w"))
+    errmsg.append(myfunc.WriteFile('variants', variantfile_t, "w"))
+    errmsg.append(myfunc.WriteFile('variants', variantfile_r, "w"))
     base_www_url = "http://" + seqinfo['hostname']
     seqinfo['base_www_url'] = base_www_url
 
@@ -680,6 +697,10 @@ def RunQuery_wsdl_local(rawseq, filtered_seq, seqinfo):#{{{
     seqfile_t = "%s/query.fa"%(tmpdir)
     seqfile_r = "%s/query.fa"%(rstdir)
     warnfile = "%s/warn.txt"%(tmpdir)
+
+    variantfile_t = "%s/variants.fa"%(tmpdir)
+    variantfile_r = "%s/variants.fa"%(rstdir)
+
     jobinfo_str = "%s\t%s\t%s\t%s\t%d\t%s\t%s\t%s\n"%(seqinfo['date'], jobid,
             seqinfo['client_ip'], seqinfo['numseq'],
             len(rawseq),seqinfo['jobname'], seqinfo['email'],
@@ -688,6 +709,8 @@ def RunQuery_wsdl_local(rawseq, filtered_seq, seqinfo):#{{{
     errmsg.append(myfunc.WriteFile(rawseq, rawseqfile, "w"))
     errmsg.append(myfunc.WriteFile(filtered_seq, seqfile_t, "w"))
     errmsg.append(myfunc.WriteFile(filtered_seq, seqfile_r, "w"))
+    errmsg.append(myfunc.WriteFile('variants', variantfile_t, "w"))
+    errmsg.append(myfunc.WriteFile('variants', variantfile_r, "w"))
     base_www_url = "http://" + seqinfo['hostname']
     seqinfo['base_www_url'] = base_www_url
 
@@ -1785,10 +1808,8 @@ def get_example(request):#{{{
 
     return render(request, 'pred/example.html', info)
 #}}}
-def oldtopcons(request):#{{{
-    url_oldtopcons = "http://old.topcons.net"
-    return HttpResponseRedirect(url_oldtopcons);
-#}}}
+
+#Not available for pathopred
 def help_wsdl_api(request):#{{{
     info = {}
 
@@ -1905,9 +1926,6 @@ def get_results(request, jobid="1"):#{{{
     resultdict['isSuperUser'] = isSuperUser
     resultdict['client_ip'] = client_ip
 
-
-    #img1 = "%s/%s/%s/%s"%(SITE_ROOT, "result", jobid, "PconsC2.s400.jpg")
-    #url_img1 =  serve(request, os.path.basename(img1), os.path.dirname(img1))
     rstdir = "%s/%s"%(path_result, jobid)
     outpathname = jobid
     resultfile = "%s/%s/%s/%s"%(rstdir, jobid, outpathname, "query.result.txt")
@@ -2069,8 +2087,8 @@ def get_results(request, jobid="1"):#{{{
     newrun_table_list = [] # this is used for calculating the remaining time
 # get seqid_index_map
     if os.path.exists(finished_seq_file):
-        resultdict['index_table_header'] = ["No.", "Length", "LOC_DEF", "LOC_DEF_SCORE",
-                "RunTime(s)", "SequenceName", "Source" ]
+        resultdict['index_table_header'] = ["No.", "ID", "Length", 
+                "Variant", "Prediction", "Prediction score", "Severity", "Severity score", "RunTime(s)", "Source"]
         index_table_content_list = []
         indexmap_content = myfunc.ReadFile(finished_seq_file).split("\n")
         cnt = 0
@@ -2079,8 +2097,6 @@ def get_results(request, jobid="1"):#{{{
             if len(strs)>=7:
                 subfolder = strs[0]
                 length_str = strs[1]
-                loc_def_str = strs[2]
-                loc_def_score_str = strs[3]
                 source = strs[4]
                 try:
                     runtime_in_sec_str = "%.1f"%(float(strs[5]))
@@ -2092,13 +2108,44 @@ def get_results(request, jobid="1"):#{{{
                 except:
                     runtime_in_sec_str = ""
                 desp = strs[6]
-                rank = "%d"%(cnt+1)
-                if cnt < g_params['MAX_ROWS_TO_SHOW_IN_TABLE']:
-                    index_table_content_list.append([rank, length_str, loc_def_str,
-                        loc_def_score_str, runtime_in_sec_str, desp[:30], subfolder, source])
-                if source == "newrun":
-                    newrun_table_list.append([rank, subfolder])
-                cnt += 1
+                
+                #Attempt to read the output prediction file in the subfolder
+                output_pred_file = "%s/%s/%s/output_predictions"%(rstdir, jobid, subfolder)
+                resultdict['output_pred_file'] = None   
+                if os.path.exists(output_pred_file):
+                        resultdict['output_pred_file'] = os.path.basename(output_pred_file)
+                        prediction_lines = myfunc.ReadFile(output_pred_file).split("\n")
+                        for pred_line in prediction_lines:
+                            if pred_line == "": continue
+                            print(pred_line)
+                            print(pred_line.split('\t'))
+                            pred_identifier = pred_line.split('\t')[0]
+                            pred_variant = pred_line.split('\t')[1]
+                            pred_class = pred_line.split('\t')[2]
+                            pred_score = pred_line.split('\t')[3]
+                            pred_severity = pred_line.split('\t')[4]
+                            pred_sev_score = pred_line.split('\t')[5]
+                            rank = "%d"%(cnt+1)
+                            if cnt < g_params['MAX_ROWS_TO_SHOW_IN_TABLE']:
+                                    content_line = [rank, pred_identifier, length_str, pred_variant, pred_class,
+                                            pred_score, pred_severity, pred_sev_score, runtime_in_sec_str, source]
+                                    index_table_content_list.append(content_line)
+
+                                    cnt += 1
+
+                #See if the entropy csv exists in result directory
+                resultdict['entropy_data_file'] = None
+                output_entropy_csv = "%s/%s/%s/entropy_data.csv"%(rstdir, jobid, subfolder)
+                if os.path.exists(output_entropy_csv):
+                    resultdict['entropy_data_file'] = os.path.basename(output_entropy_csv)
+
+                    #if cnt < g_params['MAX_ROWS_TO_SHOW_IN_TABLE']:
+                    #    index_table_content_list.append([rank, length_str, pssm_resultfile_list,
+                    #        hmm_resultfile_list, runtime_in_sec_str, desp[:30], subfolder, source])
+                    if source == "newrun":
+                        newrun_table_list.append([rank, subfolder])
+                    #cnt += 1
+
         if cntnewrun > 0:
             average_run_time = sum_run_time / float(cntnewrun)
 
@@ -2116,6 +2163,9 @@ def get_results(request, jobid="1"):#{{{
 
     num_remain = numseq - num_finished
     time_remain_in_sec = num_remain * average_run_time # set default value
+
+    resultdict['num_row_result_table'] = len(resultdict['index_table_content_list'])
+
 
     # calculate the remaining time based on the average_runtime of the last x
     # number of newrun sequences
@@ -2219,13 +2269,6 @@ def get_results_eachseq(request, jobid="1", seqindex="1"):#{{{
     base_www_url = "http://" + request.META['HTTP_HOST']
 
     resultfile = "%s/%s/%s/%s"%(rstdir, outpathname, seqindex, "query.result.txt")
-    htmlfigure_file =  "%s/%s/%s/plot/%s"%(rstdir, outpathname, seqindex, "query_0.html")
-    if os.path.exists(htmlfigure_file):
-        resultdict['htmlfigure'] = "%s/%s/%s/%s/plot/%s"%(
-                "result", jobid, jobid, seqindex,
-                os.path.basename(htmlfigure_file))
-    else:
-        resultdict['htmlfigure'] = ""
 
     if os.path.exists(rstdir):
         resultdict['isResultFolderExist'] = True

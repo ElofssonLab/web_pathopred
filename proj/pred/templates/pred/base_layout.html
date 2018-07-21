@@ -1,10 +1,9 @@
 <html>
 <head>
-<title>SubCons</title>
+<title>Protein structure prediction Common Backend</title>
 <title></title>
 <meta name="description" content="TOPCONS" />
-<meta name="keywords" content="localization, bioinformatics, prediction, system
-biology" />
+<meta name="keywords" content="bioinformatics, prediction, sequence profile" />
 <meta name="robots" content="index, follow" />
 
 {% block html_head_meta %}{% endblock %}
@@ -48,7 +47,8 @@ function hideShow(element){
 }
 
 function example_fill(){
-  document.seq_form.rawseq.value='>sp|P04201|MAS_HUMAN\nMDGSNVTSFVVEEPTNISTGRNASVGNAHRQIPIVHWVIMSISPVGFVENGILLWFLCFRMRRNPFTVYITHLSIADISLLFCIFILSIDYALDYELSSGHYYTIVTLSVTFLFGYNTGLYLLTAISVERCLSVLYPIWYRCHRPKYQSALVCALLWALSCLVTTMEYVMCIDREEESHSRNDCRAVIIFIAILSFLVFTPLMLVSSTILVVKIRKNTWASHSSKLYIVIMVTIIIFLIFAMPMRLLYLLYYEYWSTFGNLHHISLLFSTINSSANPFIYFFVGSSKKKRFKESLKVVLTRAFKDEMQPRRQKDNCNTVTVETVV\n';
+  document.seq_form.rawseq.value='>P26439\nMGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG\nDILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI\nYTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY\nTCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR\nDPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV\nSFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV\nDRHKETLKSKTQ';
+  document.seq_form.variants.value='>P26439\nP186L\nP222H\nP222Q';
 }
 
 var ImgArraySubmitNumJob = [
@@ -86,21 +86,11 @@ function ChangeImgSubmitNumSeq(imgPtr) {
 
 <body>
 <!-- TOP panel begins-->
-<table width="900" height=140 border="0" cellspacing="0" cellpadding="0" align="center">
-
-  <!--
-  <tr>
-    <td align="left" class="title">TOPCONS2</td>
-
-    <td></td>
-    <td align="right" class="headerdate">
-      <script language="JavaScript"> print_todays_date(); </script>
-    </td>
-  </tr>
-  -->
+<table width="100%" height=134 border="0" cellspacing="0" cellpadding="0" align="center">
 
   <tr>
-    <td width="100%" height="124" colspan="100%" align="right" valign="top" background="{{STATIC_URL}}images/header_subcons.png">
+    <td width="100%" height="124" colspan="100%" align="center" valign="center" style="background-size: 100%; border: 0.1em solid black;border-radius: 0.5em;" alt="Common Backend" bgcolor="#94b8b8" >
+        <font size="6" face="verdana" color="white"> Pathopred </font>
     </td>
 
   </tr>
@@ -108,7 +98,7 @@ function ChangeImgSubmitNumSeq(imgPtr) {
 <!-- TOP panel ends-->
 
 <!-- Main part begins-->
-<table width="900" height="80%" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#FFFFFF">
+<table width="100%" height="80%" border="0" align="center" cellpadding="5" cellspacing="0" bgcolor="#FFFFFF">
   <tr>
     <!-- LEFT panel begins -->
     <td width="20%" valign="top" style="background-repeat: repeat-y; background-position: top left;" background="{{STATIC_URL}}images/cbr_graymeny160_shadow.png">
@@ -119,20 +109,14 @@ function ChangeImgSubmitNumSeq(imgPtr) {
           <td>
             <table width="80%" border="0" cellpadding="0" cellspacing="0">
               <tr align="left"> <td><a href="/pred/" class="mainlevel" id="active_menu">New query</a></td> </tr>
-              <!--<tr align="left"> <td><a href="/pred/scampi/" class="mainlevel">SCAMPI</a></td> </tr> -->
-              <!--<tr align="left"> <td><a href="/pred/octopus/" class="mainlevel">OCTOPUS</a></td> </tr>-->
-              <!--<tr align="left"> <td><a href="/pred/deltag/" class="mainlevel">&Delta;G-scale</a></td> </tr>-->
-              <!--<tr align="left"> <td><a href="/pred/zpred/" class="mainlevel">ZPRED</a></td> </tr> -->
-              <!--<tr align="left"> <td><a href="/pred/proprodiv/" class="mainlevel">PRO/PRODIV</a></td> </tr>-->
-              <tr align="left"> <td><a href="/pred/help-wsdl-api/" class="mainlevel">Batch WSDL API</a></td> </tr>
+              
               <tr align="left"> <td><a href="/pred/download/" class="mainlevel">Download</a></td> </tr>
               <tr align="left"> <td><a href="/pred/reference/" class="mainlevel">References</a></td> </tr>
               <tr align="left"> <td><a href="/pred/news/" class="mainlevel">News</a></td> </tr>
               <tr align="left"> <td><a href="/pred/serverstatus/" class="mainlevel">Server status</a></td> </tr>
               <tr align="left"> <td><a href="/pred/example/" class="mainlevel">Example results</a></td> </tr>
-              <tr align="left"> <td><a href="/pred/findjob/" class="mainlevel">Find your job</a></td> </tr>
-              <!--<tr align="left"> <td><a href="/pred/oldtopcons/" class="mainlevel">Old TOPCONS</a></td> </tr>-->
               <tr align="left"> <td><a href="/pred/help/" class="mainlevel">Help</a></td> </tr>
+              
             </table>
             <br>
 
@@ -146,50 +130,50 @@ function ChangeImgSubmitNumSeq(imgPtr) {
                 <tr> <td><a href="/pred/failed/" ><font color="red">Failed</font></a></td>      <td>&nbsp;&nbsp;</td> <td align="right">{{jobcounter.failed}}</td></tr>
               </table>
             </div>
+
+            <br> <br> <br> <br>
+
+                <!--logos-->
+            <div align="left">
+                <table width="10%" border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td align="left" style="min-width:100px">
+                    &#169; <a href="http://bioinfo.se" target="_blank">Arne Elofsson</a>
+                    </td>
+                </tr>
+                </table>
+                <br>
+                <table width="10%" border="0" cellpadding="1" cellspacing="1">
+                <tr>
+                    <td align="left">
+                    <a href="http://www.scilifelab.se" title="http://www.scilifelab.se"><img src="{{STATIC_URL}}images/logo_scilifelab.jpg" alt="SciLifeLab Logotype" style="border: none;  height: 20; " target="_blank"></a>
+                    </td>
+                    <td align="left">
+                    <a href="http://www.nbis.se" title="http://www.nbis.se"><img src="{{STATIC_URL}}images/logo_NBIS.png" alt="nbis Logotype" style="border: none;  height: 20; " target="_blank"></a>
+                    </td>
+                </tr>
+                </table>
+                <table width="10%" border="0" cellpadding="1" cellspacing="1">
+                <tr>
+                    <td align="left">
+                    <a href="http://www.e-science.se" title="http://www.e-science.se"><img src="{{STATIC_URL}}images/logo_SeRC.png" alt="SeRC Logotype" style="border: none;  height: 20; " target="_blank"></a>
+                    </td>
+                    <td align="left">
+                    <a href="http://www.su.se" title="http://www.su.se"><img src="{{STATIC_URL}}images/logo_SU.gif" alt="Stockholm University logotype" style="border: none;  height: 20; " target="_blank"></a>
+                    </td>
+                    <td align="left">
+                    <a href="https://www.egi.eu" title="https://www.egi.eu"><img src="{{STATIC_URL}}images/logo_EGI.png" alt="EGI logotype" style="border: none;  height: 20; " target="_blank"></a>
+                    </td>
+                </tr>
+                <tr></tr>
+                </table>
+
+            </div>
+
             <br>
           </td>
         </tr>
       </table>
-
-
-      <br><br><br><br>
-        <!--logos-->
-      <div align="left">
-        <table width="10%" border="0" cellpadding="0" cellspacing="0">
-          <tr>
-            <td align="left" style="min-width:100px">
-              &#169; <a href="http://bioinfo.se" target="_blank">Arne Elofsson</a>
-            </td>
-          </tr>
-        </table>
-        <br>
-        <table width="10%" border="0" cellpadding="1" cellspacing="1">
-          <tr>
-            <td align="left">
-              <a href="http://www.scilifelab.se" title="http://www.scilifelab.se"><img src="{{STATIC_URL}}images/logo_scilifelab.jpg" alt="SciLifeLab Logotype" style="border: none;  height: 20; " target="_blank"></a>
-            </td>
-            <td align="left">
-              <a href="http://www.nbis.se" title="http://www.nbis.se"><img src="{{STATIC_URL}}images/logo_NBIS.png" alt="nbis Logotype" style="border: none;  height: 20; " target="_blank"></a>
-            </td>
-          </tr>
-        </table>
-        <table width="10%" border="0" cellpadding="1" cellspacing="1">
-          <tr>
-            <td align="left">
-              <a href="http://www.e-science.se" title="http://www.e-science.se"><img src="{{STATIC_URL}}images/logo_SeRC.png" alt="SeRC Logotype" style="border: none;  height: 20; " target="_blank"></a>
-            </td>
-            <td align="left">
-              <a href="http://www.su.se" title="http://www.su.se"><img src="{{STATIC_URL}}images/logo_SU.gif" alt="Stockholm University logotype" style="border: none;  height: 20; " target="_blank"></a>
-            </td>
-            <td align="left">
-              <a href="https://www.egi.eu" title="https://www.egi.eu"><img src="{{STATIC_URL}}images/logo_EGI.png" alt="EGI logotype" style="border: none;  height: 20; " target="_blank"></a>
-            </td>
-          </tr>
-        <tr></tr>
-        </table>
-
-      </div>
-
     </td>
     <!-- LEFT panel Ends -->
 
@@ -214,6 +198,29 @@ function ChangeImgSubmitNumSeq(imgPtr) {
                 </tr>
               </table>
             </div>
+
+
+
+	    <!-- add div for chart without fixed width-->
+            <div id="content_right_panel_chart" style=height:100%;width:1600;overflow:auto>
+              <table width="100%"  cellpadding="0" cellspacing="0">
+                <tr>
+                  <td valign="top" width="100%">
+                    {% block content_right_panel_chart %}{% endblock %}
+                  </td>
+                </tr>
+              </table>
+
+              <table cellpadding="0" cellspacing="0" class="moduletable">
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </div>
+
+
+
+
           </td>
         </tr>
       </table>
@@ -226,7 +233,7 @@ function ChangeImgSubmitNumSeq(imgPtr) {
 <!-- Add a line separator -->
 <!--<hr>-->
 <!-- BOTTOM panel begins -->
-<table width="900" height=75 border="0" align="center" cellpadding="0" cellspacing="0">
+<table width="100%" height=75 border="0" align="center" cellpadding="0" cellspacing="0">
   <tr>
     <td width="23"><img src="{{STATIC_URL}}images/cbr_lower_left_gray.png" alt="" width="23" height="75" border="0" /></td>
 

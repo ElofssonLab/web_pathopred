@@ -42,6 +42,18 @@
     </p>
 
     <p class="section">
+        <h3>Extreme cases:</h3>
+        <ul>
+            <li>
+            The longest sequence predicted by PRODRES (<b>{{longestlength_str}} a.a.</b>)
+            <a href="{{BASEURL}}result/{{li_longestseq.0}}/{{li_longestseq.1}}">link</a>
+            </li>
+
+            <li>
+            The sequence takes longest time to predict by PRODRES (<b>{{longestruntime_str}}</b>)
+            <a href="{{BASEURL}}result/{{li_longestruntime.0}}/{{li_longestruntime.1}}">link</a>
+            </li>
+        </ul>
     </p>
 
     <p class="section">
@@ -92,9 +104,10 @@
         </table>
         </div>
     </p>
-    <!-- clear the floating and start new section-->
-    <br style="clear:both" />
 
+    <div style="clear:both;"></div> <!--stop floating from here-->
+
+    </div>
     <p class="section">
      <h3>Frequency of submission over time:</h3>
 
@@ -122,8 +135,18 @@
         </p>
     </p>
 
+    {% comment %}
     <p class="section">
         <h3>Running time of query sequences:</h3>
+        The sequences profiles of TOPCONS might be built by three methods.
+        <ul>
+            <li>
+            <b>Pfam</b>: when Pfam domains can be found for the query sequences.
+            </li>
+            <li>
+            <b>Uniref</b>: when Pfam domains can be found for the query sequences, a psiblast/jackhmmer searching in Uniref90 is done.
+            </li>
+        </ul>
 
         <font color="#6633CC"><b>Average running time</b></font><br>
         <img
@@ -147,7 +170,34 @@
 
     </p>
 
+    <p class="section">
+        <h3>Response time of submitted jobs versus number of sequences of jobs</h3>
+        <p>Since the response time of submitted jobs might be affected by
+        the server downtime, the median value for each bin is used. </p>
+        <font color="#6633CC"><b>Waiting time</b></font><br>
+        <img
+        src="{{STATIC_URL}}log/stat/median_waittime_nseq.stat.txt.png"
+        alt="Waiting time of jobs" height="400">
 
+        <font color="#6633CC"><b>Total running time</b></font><br>
+        <img
+        src="{{STATIC_URL}}log/stat/median_finishtime_nseq.stat.txt.png"
+        alt="Waiting time of jobs" height="400">
+        <br> <br>
+    </p>
+
+    <p class="section">
+        <h3>Number of sequences of submitted jobs</h3>
+        A job with one or several sequences can be submitted via the form on
+        the web-page or by the command line script using WSDL service.
+        <img
+        src="{{STATIC_URL}}log/stat/numseq_of_job.web.stat.txt.mtp.png"
+        alt="size of submitted jobs" height="400">
+        <br> <br>
+
+
+    </p>
+    {% endcomment %}
 
 {% endblock %}
 

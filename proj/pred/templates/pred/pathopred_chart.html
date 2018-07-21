@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body { font: 12px Arial; }
+path {
+    stroke: steelblue;
+    stroke-width: 2;
+    fill: none;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: grey;
+    stroke-width: 1;
+    shape-rendering: crispEdges;
+}
+
+div.tooltip {
+    position: absolute;
+    text-align: center;
+    width: 160px;
+    height: 100px;
+    padding: 2px;
+    font: 12px sans-serif;
+    background: lightsteelblue;
+    border: 0px;
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+</style>
+
+<body id="chartbody">
+<div id="chartdiv">
+<h3> An interactive graph of your sequence  </h3>
+</div>
+<!-- load d3.js -->
+<script src="https://d3js.org/d3.v3.min.js"></script>
+
+<script>
+
+var margin = {top: 30, right: 20, bottom: 30, left:55},
+    width = 1200 - margin.left - margin.right,
+    height = 300 - margin.top - margin.bottom;
+
+var x = d3.scale.linear().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
+
+var xAxis = d3.svg.axis().scale(x)
+    .orient("bottom").ticks(5);
+
+var yAxis = d3.svg.axis().scale(y)
+    .orient("left").ticks(5)
+
+var valueline = d3.svg.line()
+    .x(function(d) { return x(d.pos); })
+    .y(function(d) { return y(d.entropy); });
+
+var div = d3.select("#chartdiv").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+var svg = d3.select("#chartdiv")
+    .append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+        .attr("transform",
+              "translate(" + margin.left + "," + margin.top + ")");
+
+var entr_vector = []
+
+//Get data here from json dump or read csv
+d3.csv("{{STATIC_URL}}result/{{jobid}}/{{jobid}}/{{subdirname}}/{{entropy_data_file}}", function(d) {
+    d.pos = +d.pos;
+    d.entropy = +d.entropy;
+    entr_vector.push(d.entropy);
+    return d;
+   }, function(error, data) {
+   if (error) throw error;
+
+   x.domain([0, d3.max(data, function(d) { return d.pos; })]);
+   y.domain([0, d3.max(data, function(d) { return d.entropy; })]);
+
+   svg.append("path")
+       .attr("class", "line")
+       .attr("d", valueline(data));
+
+   svg.append("g")
+       .attr("class", "x axis")
+       .attr("transform", "translate(0," + height + ")")
+       .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+  //Add labels for x and y axes
+  svg.append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 0 - margin.left)
+      .attr("x", 0 - (height/2))
+      .attr("dy", "1em")
+      .style("text-anchor", "middle")
+      .text("Entropy")
+
+
+  svg.append("text")
+      .attr("transform",
+      	    "translate(" + (width/2) + " ," +
+      	    		   (height + margin.top + 0) + ")")
+      .style("text-anchor", "middle")
+      .text("Residue number");
+
+});
+
+//Read variant data to annotate the svg
+
+d3.text("{{STATIC_URL}}result/{{jobid}}/{{jobid}}/{{subdirname}}/{{output_pred_file}}", function(text) {
+    var varData = d3.csv.parseRows(text, function(d) {
+        return d;
+    });
+
+    varData.forEach(function(d) {
+
+        var fields = d[0].split("\t");
+        var var_line = fields[1];
+        var position = Number(var_line.slice(1,-1));
+        var label = fields[2];
+        var pred_score = fields[3];
+        var sev_label = fields[4];
+        var sev_score = fields[5];
+        if (label == "Pathogenic") {
+            var fillColor = "red";
+        } else {
+            var fillColor = "green";
+        }
+        
+
+        svg.selectAll("dot")
+            .data(varData)
+        .enter().append("circle")
+            .attr("r", 5)
+            .attr("cx", x(position-1))
+            .attr("cy", y(entr_vector[position-1]))
+            .attr("fill", fillColor)
+            .on("mouseover", function(d) {
+                div.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                div .html("Variant: " + var_line + "<br/>Prediction: " + label + "<br/>Entropy: "
+                	  + entr_vector[position-1].toFixed(4) + "<br/>Prediction score: " + parseFloat(pred_score).toFixed(4)
+                	  + "<br/>Severity: " + sev_label + "<br/>Severity score: " + parseFloat(sev_score).toFixed(4))
+                   .style("left", (d3.event.pageX) + "px")
+                   .style("top", (d3.event.pageY - 120) + "px");
+                })
+            .on("mouseout", function(d) {
+                div.transition()
+                   .duration(500)
+                   .style("opacity", 0);
+            });
+
+    });
+
+});
+
+
+
+
+</script>
+
+</body>

@@ -26,20 +26,19 @@
           <td><img src="{{STATIC_URL}}/images/0.gif" border=0 height=1 width=400></td>
           <td><img src="{{STATIC_URL}}/images/0.gif" border=0 height=1 width=50></td>
         </tr>
-        <tr><td>
-        <p>
-        SubCon is a new ensemble method for improved subcellular localization
-        prediction in Human. SubCons combines up to five predictors methods,
-        SherLoc2, LocTree2, MultiLoc2, CELLO2.5 and YLoc (the latest two if
-        available) using a random forest classifier. LocTree2 requires PSSM. To
-        speed up the creation of PSSM file, we use our tool PRODRES (more info
-        at https://github.com/ElofssonLab/PRODRES). PRODRES is faster in
-        createing PSSM profile and it has the same accuracy as Psi-Blast. It is
-        recomended to read carefully the instruction and install it! However,
-        SubCons runs Psi-Blast as alternative to PRODRES (THIS MAKE SUBCONS
-        MUCH SLOWER)
-        </p>
-        </td></tr>
+        <tr> <td>
+            PRODRES is a fast way to obtain a Position-Specific Scoring
+            Matrix (PSSM) or a jackhmmer-generated profile Hidden Markov
+            Model (pHMM). By using the <a
+            href="http://pfam.xfam.org">PFAM</a> database as an
+            intermediate step, we can speed up the process of profile creation
+            by almost ten times if the query sequence has at least one hit in PFAM
+            domains, while, at the same time, obtaining virtually the same
+            profile as with a standard PSI-BLAST or jackhmmer search. If there
+            is no hit found PFAM domains, then a full searching in the Uniref90
+            database is performed.
+          </td>
+        </tr>
       </table>
 
       <br><br>
@@ -55,23 +54,26 @@
             <p>
             Input to the server is an amino acid sequence in <a
               href='http://blast.ncbi.nlm.nih.gov/blastcgihelp.shtml'
-              target=\'_blank\'>FASTA</a> format. The user can either submit paste
-            one or more sequences in the text-area provided, or, alternatively,
-            upload a file for batch submission of sequences).
+              target=\'_blank\'>FASTA</a> format. The users can submit your
+          query by either pasting one or several sequences in the text-area
+          provided, or, alternatively, uploading a file for batch submission of
+          sequences. PSSM profiles or HMMs (depending on your choices) for all
+          input sequences will be created.
             </p>
 
             <i>Example input:</i> <br>
             <span style="font-family: courier">
-              &gt;sp|P04201|MAS_HUMAN<br>
-              MDGSNVTSFVVEEPTNISTGRNASVGNAHRQIPIVHWVIMSISPVGFVENGILLWFLCFR<br>
-              MRRNPFTVYITHLSIADISLLFCIFILSIDYALDYELSSGHYYTIVTLSVTFLFGYNTGL<br>
-              YLLTAISVERCLSVLYPIWYRCHRPKYQSALVCALLWALSCLVTTMEYVMCIDREEESHS<br>
-              RNDCRAVIIFIAILSFLVFTPLMLVSSTILVVKIRKNTWASHSSKLYIVIMVTIIIFLIF<br>
-              AMPMRLLYLLYYEYWSTFGNLHHISLLFSTINSSANPFIYFFVGSSKKKRFKESLKVVLT<br>
-              RAFKDEMQPRRQKDNCNTVTVETVV<br>
-
+              &gt;sp|O93740|BACR_HALS4 Bacteriorhodopsin Halobacterium sp.<br>
+              MCCAALAPPMAATVGPESIWLWIGTIGMTLGTLYFVGRGRGVRDRKMQEFYIITIFITTI<br>
+              AAAMYFAMATGFGVTEVMVGDEALTIYWARYADWLFTTPLLLLDLSLLAGANRNTIATLI<br>
+              GLDVFMIGTGAIAALSSTPGTRIAWWAISTGALLALLYVLVGTLSENARNRAPEVASLFG<br>
+              RLRNLVIALWFLYPVVWILGTEGTFGILPLYWETAAFMVLDLSAKVGFGVILLQSRSVLE<br>
+              RVATPTAAPT<br>
             </span>
             <br>
+            <br>
+            Most common parameters for both PSI-BLAST and jackhmmer can be set
+            by the users accordingly in the <font color="#333EF3"><b>Advanced options</b></font> section
 
       </td></tr>
     </table>
@@ -86,8 +88,14 @@
           <td><img src="{{STATIC_URL}}/images/0.gif" border=0 height=1 width=400></td>
           <td><img src="{{STATIC_URL}}/images/0.gif" border=0 height=1 width=50></td></tr>
         <tr><td>
-            see the <a href="/pred/result/example_oneseq"> example output</a>
-            <br><br>
+                Based on the choices of the <b>Second search method</b>, a PSSM or a pHMM will be
+                returned. Further, the users can also obtain raw outputs and
+                intermediate files by checking <b>Keep temporary results</b> in
+                the <font color="#333EF3"><b>Advanced options</b></font>. All
+                files can be downloaded as a zip archive file for further analysis.
+      </td></tr>
+        <tr><td>
+                Furthermore, examples of results can be found <a href="/pred/example">here</a>
       </td></tr>
     </table>
     <br><br>
@@ -95,19 +103,17 @@
     <a name="4"></a>
 
     <h3>4. References</h3><br>
-    <table cellspacing=0 cellpadding=5 border=0>
+    <table cellspacing=0 cellpadding=0 border=0>
       <tr><td><img src="{{STATIC_URL}}/images/0.gif" border=0 height=1 width=400></td>
         <td><img src="{{STATIC_URL}}/images/0.gif" border=0 height=1 width=50></td>
       </tr>
-      <tr><td>
-            {% include "pred/refs.html" %}
-      </td></tr>
-    </table>
+    {% include "pred/refbib.html" %}
+  </table>
 
   <br><br>
   <a name="5"></a>
 
-  <h3>5. Contact</h3><br>
+    <h3>5. Contact</h3><br
     <table cellspacing=0 cellpadding=0 border=0>
       <tr>
         <td><img src="{{STATIC_URL}}/images/0.gif" border=0 height=1 width=400></td>

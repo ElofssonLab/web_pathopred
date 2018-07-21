@@ -1,0 +1,36 @@
+Attempting to print the script working directory
+/home/akv/Var_serv/variant_server/scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path /home/akv/Var_serv/variant_server/scripts/testout/P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.clustal with 53 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.a3m Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.clustal with 455 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.a3m Masking P26439 blast with E-val 0.001 and idp range 100 - 90 Masking P26439 blast with E-val 0.001 and idp range 90 - 0 /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90._blast.fasta /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0._blast.fasta
+Attempting to generate prediction
+File "/home/akv/Var_serv/variant_server/scripts/predictor.py", line 97 severity_prediction[0,0)) ^ SyntaxError: invalid syntax
+Attempting to print the script working directory
+/home/akv/Var_serv/variant_server/scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path /home/akv/Var_serv/variant_server/scripts/testout/P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.clustal with 53 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.a3m Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.clustal with 455 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.a3m Masking P26439 blast with E-val 0.001 and idp range 100 - 90 Masking P26439 blast with E-val 0.001 and idp range 90 - 0 /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90._blast.fasta /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0._blast.fasta
+Attempting to generate prediction
+File "/home/akv/Var_serv/variant_server/scripts/predictor.py", line 97 severity_prediction[0,0)) ^ SyntaxError: invalid syntax
+Attempting to print the script working directory
+/home/akv/Var_serv/variant_server/scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path /home/akv/Var_serv/variant_server/scripts/testout/P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.clustal with 53 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.a3m Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.clustal with 455 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.a3m Masking P26439 blast with E-val 0.001 and idp range 100 - 90 Masking P26439 blast with E-val 0.001 and idp range 90 - 0 /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90._blast.fasta /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0._blast.fasta
+Attempting to generate prediction
+/home/akv/Var_serv/variant_server/env/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`. from ._conv import register_converters as _register_converters Using TensorFlow backend. 2018-06-11 13:40:07.829307: I tensorflow/core/platform/cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /home/akv/Var_serv/variant_server/env/lib/python2.7/site-packages/keras/models.py:318: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' All variants [] /home/akv/Var_serv/variant_server/scripts/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running through variants
