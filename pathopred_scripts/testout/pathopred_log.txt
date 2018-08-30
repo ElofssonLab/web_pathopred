@@ -1,36 +1,219 @@
 Attempting to print the script working directory
-/home/akv/Var_serv/variant_server/scripts
+/Users/alex/pathopred_scripts
 >P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
 Printing base name
 P26439
-Starting BLAST with xml path /home/akv/Var_serv/variant_server/scripts/testout/P26439.xml
+Starting BLAST with xml path testout//P26439.xml
 Copying dummy xml
 
 BLAST attempt finished
-Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.clustal with 53 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.a3m Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.clustal with 455 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.a3m Masking P26439 blast with E-val 0.001 and idp range 100 - 90 Masking P26439 blast with E-val 0.001 and idp range 90 - 0 /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90._blast.fasta /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0._blast.fasta
 Attempting to generate prediction
-File "/home/akv/Var_serv/variant_server/scripts/predictor.py", line 97 severity_prediction[0,0)) ^ SyntaxError: invalid syntax
+Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 11, in <module> from keras.models import load_model ImportError: No module named keras.models
 Attempting to print the script working directory
-/home/akv/Var_serv/variant_server/scripts
+/Users/alex/pathopred_scripts
 >P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
 Printing base name
 P26439
-Starting BLAST with xml path /home/akv/Var_serv/variant_server/scripts/testout/P26439.xml
+Starting BLAST with xml path testout//P26439.xml
 Copying dummy xml
 
 BLAST attempt finished
-Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.clustal with 53 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.a3m Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.clustal with 455 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.a3m Masking P26439 blast with E-val 0.001 and idp range 100 - 90 Masking P26439 blast with E-val 0.001 and idp range 90 - 0 /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90._blast.fasta /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0._blast.fasta
 Attempting to generate prediction
-File "/home/akv/Var_serv/variant_server/scripts/predictor.py", line 97 severity_prediction[0,0)) ^ SyntaxError: invalid syntax
+/Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/h5py/__init__.py:36: RuntimeWarning: numpy.dtype size changed, may indicate binary incompatibility. Expected 96, got 88 from ._conv import register_converters as _register_converters /Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/h5py/__init__.py:45: RuntimeWarning: numpy.dtype size changed, may indicate binary incompatibility. Expected 96, got 88 from . import h5a, h5d, h5ds, h5f, h5fd, h5g, h5r, h5s, h5t, h5p, h5z /Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/h5py/_hl/group.py:22: RuntimeWarning: numpy.dtype size changed, may indicate binary incompatibility. Expected 96, got 88 from .. import h5g, h5i, h5o, h5r, h5t, h5l, h5p Using TensorFlow backend. Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 11, in <module> from keras.models import load_model File "/Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/__init__.py", line 3, in <module> from . import utils File "/Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/utils/__init__.py", line 6, in <module> from . import conv_utils File "/Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/utils/conv_utils.py", line 9, in <module> from .. import backend as K File "/Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/backend/__init__.py", line 89, in <module> from .tensorflow_backend import P26439.fasta P26439.xml _load_data.so blastdb_soft calculation.py go-basic.obo go_term_freq_neutral_p2_refseq.p go_term_freq_pathogenic_p2_refseq.p hhsuite_scripts mafft-linux64 mafft-mac master_pathopred.sh p2_la4_dr7.hdf5 predictor.py prepare_alignments.py prepare_alignments.pyc ps_transfer.h5 reformat.pl ss_pred_resnet_elu_nolr_dropout01_l26_large_v3_saved_model.h5 testout variants File "/Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/backend/tensorflow_backend.py", line 5, in <module> import tensorflow as tf ImportError: No module named tensorflow
 Attempting to print the script working directory
-/home/akv/Var_serv/variant_server/scripts
+/Users/alex/pathopred_scripts
 >P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
 Printing base name
 P26439
-Starting BLAST with xml path /home/akv/Var_serv/variant_server/scripts/testout/P26439.xml
+Starting BLAST with xml path testout//P26439.xml
 Copying dummy xml
 
 BLAST attempt finished
-Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.clustal with 53 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90.a3m Reformatted /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.clustal with 455 sequences from clu to a3m and written to file /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0.a3m Masking P26439 blast with E-val 0.001 and idp range 100 - 90 Masking P26439 blast with E-val 0.001 and idp range 90 - 0 /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_100-90._blast.fasta /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat Aligning with.. /home/akv/Var_serv/variant_server/scripts/mafft-linux64/mafft.bat --auto --clustalout /home/akv/Var_serv/variant_server/scripts/testout/tmp/P26439_90-0._blast.fasta
 Attempting to generate prediction
-/home/akv/Var_serv/variant_server/env/lib/python2.7/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`. from ._conv import register_converters as _register_converters Using TensorFlow backend. 2018-06-11 13:40:07.829307: I tensorflow/core/platform/cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /home/akv/Var_serv/variant_server/env/lib/python2.7/site-packages/keras/models.py:318: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' All variants [] /home/akv/Var_serv/variant_server/scripts/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running through variants
+Using TensorFlow backend. Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 12, in <module> from goatools import obo_parser ImportError: No module named goatools
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 14, in <module> import calculation File "/Users/alex/pathopred_scripts/calculation.py", line 18, in <module> import _load_data ImportError: dlopen(/Users/alex/pathopred_scripts/_load_data.so, 2): no suitable image found. Did find: /Users/alex/pathopred_scripts/_load_data.so: unknown file type, first eight bytes: 0x7F 0x45 0x4C 0x46 0x02 0x01 0x01 0x00 /Users/alex/pathopred_scripts/_load_data.so: unknown file type, first eight bytes: 0x7F 0x45 0x4C 0x46 0x02 0x01 0x01 0x00
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 14, in <module> import calculation File "/Users/alex/pathopred_scripts/calculation.py", line 18, in <module> import _load_data File "_load_data.pyx", line 10, in init _load_data import tables ImportError: No module named tables
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 14, in <module> import calculation File "/Users/alex/pathopred_scripts/calculation.py", line 18, in <module> import _load_data File "_load_data.pyx", line 11, in init _load_data import tqdm ImportError: No module named tqdm
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. All variants [] Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 60, in <module> entropy_vector = calculation.get_all_entropies_normalized(align_low) File "/Users/alex/pathopred_scripts/calculation.py", line 269, in get_all_entropies_normalized _, part_entr, _ = _load_data.process_a3m(a3m_name) TypeError: Argument 'fasta' has incorrect type (expected unicode, got str)
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. All variants [] Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 61, in <module> entropy_vector = calculation.get_all_entropies_normalized(align_low) File "/Users/alex/pathopred_scripts/calculation.py", line 269, in get_all_entropies_normalized _, part_entr, _ = _load_data.process_a3m(a3m_name) File "_load_data.pyx", line 189, in _load_data.process_a3m alignment = load_a3m(fasta) File "_load_data.pyx", line 66, in _load_data.load_a3m for line in open(fasta): TypeError: Expected unicode, got str
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. All variants [] Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 60, in <module> entropy_vector = calculation.get_all_entropies_normalized(align_low) File "/Users/alex/pathopred_scripts/calculation.py", line 269, in get_all_entropies_normalized _, part_entr, _ = _load_data.process_a3m(unicode(a3m_name)) File "_load_data.pyx", line 189, in _load_data.process_a3m alignment = load_a3m(fasta) File "_load_data.pyx", line 66, in _load_data.load_a3m for line in open(fasta): TypeError: Expected unicode, got str
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. All variants [] Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 60, in <module> entropy_vector = calculation.get_all_entropies_normalized(align_low) File "/Users/alex/pathopred_scripts/calculation.py", line 269, in get_all_entropies_normalized _, part_entr, _ = _load_data.process_a3m(unicode(a3m_name,encoding="utf-8")) File "_load_data.pyx", line 189, in _load_data.process_a3m alignment = load_a3m(fasta) File "_load_data.pyx", line 66, in _load_data.load_a3m for line in open(fasta): TypeError: Expected unicode, got str
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. 2018-08-13 15:36:37.956748: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/engine/saving.py:304: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' All variants [] /Users/alex/pathopred_scripts/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running predictions for variants
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. 2018-08-13 15:43:24.871445: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/engine/saving.py:304: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' >P26439 All variants [] /Users/alex/pathopred_scripts/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running predictions for variants
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+File "/Users/alex/pathopred_scripts/predictor.py", line 107 print('On variant: ' + variant) ^ IndentationError: expected an indented block
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. Identifier: >P26439 Going through lines >P26439 P186L P222H P222Q Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 60, in <module> print('All variants:\n' + all_variants) TypeError: cannot concatenate 'str' and 'list' objects
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. 2018-08-13 16:00:17.662725: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/engine/saving.py:304: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' Identifier: >P26439 Going through lines >P26439 P186L P222H P222Q All variants: [] /Users/alex/pathopred_scripts/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running predictions for variants
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. Identifier: P26439 Going through lines >P26439 Traceback (most recent call last): File "/Users/alex/pathopred_scripts/predictor.py", line 60, in <module> all_variants.append(variant) NameError: name 'variant' is not defined
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. 2018-08-13 16:08:24.766581: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/engine/saving.py:304: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' Identifier: P26439 Going through lines >P26439 P186L P222H P222Q All variants: ['P186L', 'P222H', 'P222Q'] /Users/alex/pathopred_scripts/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running predictions for variants On variant: P186L Prediction: [[0.5740289]] On variant: P222H Prediction: [[0.8817835]] On variant: P222Q Prediction: [[0.86071855]]
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+>P26439 MGWSCLVTGAGGLLGQRIVRLLVEEKELKEIRALDKAFRPELREEFSKLQNRTKLTVLEG DILDEPFLKRACQDVSVVIHTACIIDVFGVTHRESIMNVNVKGTQLLLEACVQASVPVFI YTSSIEVAGPNSYKEIIQNGHEEEPLENTWPTPYPYSKKLAEKAVLAANGWNLKNGDTLY TCALRPTYIYGEGGPFLSASINEALNNNGILSSVGKFSTVNPVYVGNVAWAHILALRALR DPKKAPSVRGQFYYISDDTPHQSYDNLNYILSKEFGLRLDSRWSLPLTLMYWIGFLLEVV SFLLSPIYSYQPPFNRHTVTLSNSVFTFSYKKAQRDLAYKPLYSWEEAKQKTVEWVGSLV DRHKETLKSKTQ
+Printing base name
+P26439
+Starting BLAST with xml path testout//P26439.xml
+Copying dummy xml
+
+BLAST attempt finished
+Attempting to generate prediction
+Using TensorFlow backend. 2018-08-13 16:16:00.345569: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /Users/alex/web_common_backend_pathopred_ver/env/lib/python2.7/site-packages/keras/engine/saving.py:304: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' Identifier: P26439 Going through lines >P26439 P186L P222H P222Q All variants: ['P186L', 'P222H', 'P222Q'] /Users/alex/pathopred_scripts/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running predictions for variants On variant: P186L Prediction: [[0.5740289]] On variant: P222H Prediction: [[0.8817835]] On variant: P222Q Prediction: [[0.86071855]]
+Exiting pathopred script
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts
+Attempting to print the script working directory
+/Users/alex/pathopred_scripts

@@ -13,11 +13,12 @@ exec_cmd(){ #{{{
 #}}}
 
 usage="
-USAGE: $0 SEQ MUT OUTDIR
+USAGE: $0 SEQ MUT OUTDIR ID
 OPTIONS:
   SEQ - FASTA file containing sequence
   MUT - File containing variants in format reference AA, position, altered AA, e.g. A509G
   OUTDIR - Path to save annotated variant file
+  ID - Sequence identifier (e.g. Uniprot ID)
 "
 
 VERBOSE=0
@@ -30,9 +31,8 @@ if [ "$DISPLAY" == "" ];then
     export DISPLAY=localhost:0.0
 fi
 
-
 #argument parser
-if [ $# -lt 3 ];then
+if [ $# -lt 4 ];then
 	echo "$usage"
 	exit 1
 fi
@@ -62,8 +62,8 @@ done
 
 numPositionalArgs=${#positionalArgList[@]}
 
-if [ $numPositionalArgs -ne 3 ];then
-  echo "Wrong number of positional arguments, must be 3"
+if [ $numPositionalArgs -ne 4 ];then
+  echo "Wrong number of positional arguments, must be 4"
   echo "$usage"
   exit 1
 fi
@@ -71,11 +71,11 @@ fi
 FASTA=${positionalArgList[0]}
 VARFILE=${positionalArgList[1]}
 OUTDIR=${positionalArgList[2]}
-
+IDNAME=${positionalArgList[3]}
 
 #FASTA=$(readlink -f $FASTA)
-VARFILE=$(readlink -f $VARFILE)
-OUTDIR=$(readlink -f $OUTDIR)
+#VARFILE=$(readlink -f $VARFILE)
+#OUTDIR=$(readlink -f $OUTDIR)
 
 TMPDIR="${OUTDIR}"/tmp/
 #create the directories if they do not exist
@@ -93,7 +93,6 @@ echo "$FASTA"
 echo "$VARFILE"
 echo "$OUTDIR"
 
-
 #let's make sure outdir actually exists 
 if [ ! -d "$OUTDIR" ]; then
     echo "$0: $OUTDIR does not exist"
@@ -101,17 +100,16 @@ if [ ! -d "$OUTDIR" ]; then
 fi
 
 #Where is the script located?
-rundir=$(dirname $0)
-rundir=$(readlink -f $rundir)
+#rundir=$(dirname $0)
+#rundir=$(readlink -f $rundir)
+rundir="/Users/alex/pathopred_scripts" #fix for OSX
 
 #Start time
-res1=$(/bin/date +%s.%N)
-
+res1=$(/bin/date +%s)
 
 #Write to log file in the out directory..
 echo "Attempting to print the script working directory" >> "$OUTDIR"/pathopred_log.txt
 echo "$rundir" >> "$OUTDIR"/pathopred_log.txt
-
 
 #Now we need to run a blast and save this as identifier.xml
 echo $(cat $FASTA) >> "$OUTDIR"/pathopred_log.txt
@@ -119,22 +117,26 @@ base_name=$(basename "$FASTA" | cut -d. -f1)
 echo "$base_name"
 echo "Printing base name" >> "$OUTDIR"/pathopred_log.txt
 echo "$base_name" >> "$OUTDIR"/pathopred_log.txt
-blastpath="/usr/bin/blastp"
+
+nr_path="$rundir/blastdb_soft/nr"
+#blastpath="/usr/bin/blastp"
+blastpath="/usr/local/ncbi/blast/bin/blastp"
 xml_path="${OUTDIR}/${base_name}.xml"
+
 echo "Running BLAST"
 
 echo "Starting BLAST with xml path $xml_path" >> "$OUTDIR"/pathopred_log.txt
-#blast_output=$("$blastpath" -query "$FASTA" -db nr -evalue=0.001 -out "$xml_path" -outfmt 5 2>&1)
-#echo "$blast_output" >> "$OUTDIR"/pathopred_log.txt
+blast_output=$("$blastpath" -query "$FASTA" -db "$nr_path" -evalue=0.001 -out "$xml_path" -outfmt 5 2>&1)
+echo "$blast_output" >> "$OUTDIR"/pathopred_log.txt
 #For testing, actually just copy the dummy xml in the script folder to this path
-echo "Copying dummy xml" >> "$OUTDIR"/pathopred_log.txt
-echo $(cp $rundir/P26439.xml $xml_path) >> "$OUTDIR"/pathopred_log.txt
-echo "BLAST attempt finished" >> "$OUTDIR"/pathopred_log.txt
+#echo "Copying dummy xml" >> "$OUTDIR"/pathopred_log.txt
+#echo $(cp $rundir/P26439.xml $xml_path) >> "$OUTDIR"/pathopred_log.txt
+#echo "BLAST attempt finished" >> "$OUTDIR"/pathopred_log.txt
 
 
 #Feed xml into python script
 #Store intermediate files in tmpdir
-echo $(python $rundir/prepare_alignments.py $FASTA $xml_path $TMPDIR 2>&1) >> "$OUTDIR"/pathopred_log.txt
+echo $(python $rundir/prepare_alignments.py $FASTA $xml_path $TMPDIR $nr_path)
 
 #Check output to see if successful
 if [[ ! -f "$TMPDIR"/"$base_name"_100-90.a3m || ! -f "$TMPDIR"/"$base_name"_90-0.a3m ]]; then
@@ -144,7 +146,7 @@ fi
 
 echo "Attempting to generate prediction" >> "$OUTDIR"/pathopred_log.txt
 #Then feed these into predictor
-echo $(python $rundir/predictor.py $FASTA ${TMPDIR}/${base_name}_90-0.a3m ${TMPDIR}/${base_name}_100-90.a3m $VARFILE $OUTDIR 2>&1) >> "$OUTDIR"/pathopred_log.txt
+echo $(python $rundir/predictor.py $FASTA ${TMPDIR}/${base_name}_90-0.a3m ${TMPDIR}/${base_name}_100-90.a3m $VARFILE $OUTDIR $IDNAME 2>&1) >> "$OUTDIR"/pathopred_log.txt
 
 #Make sure the output prediction file exists
 if [ ! -f "$OUTDIR"/output_predictions ]; then
@@ -161,3 +163,4 @@ res2=$(/bin/date +%s.%N)
 timefile=$OUTDIR/time.txt
 runtime=$(echo "$res2 - $res1"|/usr/bin/bc)
 echo "0;$runtime" > $timefile
+exit 0

@@ -371,11 +371,8 @@ def CreateRunJoblog(path_result, submitjoblogfile, runjoblogfile,#{{{
                             else:
                                 runtime = runtime1
 
-                            finalpredfile = "%s/%s/query_0.subcons-final-pred.csv"%(
-                                    outpath_this_seq, "final-prediction")
-                            (loc_def, loc_def_score) = webserver_common.GetLocDef(finalpredfile)
                             info_finish = [ dd, str(len(seq)), 
-                                    str(loc_def), str(loc_def_score),
+                                    None, None,
                                     "newrun", str(runtime), description]
                             finished_info_list.append("\t".join(info_finish))
                 except:
@@ -583,12 +580,6 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                     wsdl_url), gen_errfile, "a", True)
                 break
 
-
-            ############
-            print("NODES")
-            print(cntSubmitJobDict)
-            ############
-
             [cnt, maxnum] = cntSubmitJobDict[node]
             cnttry = 0
             while cnt < maxnum and iToRun < numToRun:
@@ -616,22 +607,12 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                         seqid = allseqidlist[origIndex]
                         seqanno = allannolist[origIndex]
                         seq = allseqlist[origIndex]
-                        print("SEQ PARAMS MULTI")
-                        print(allseqidlist)
-                        print(allannolist)
-                        print(allseqlist)
                         fastaseq = ">%s\n%s\n"%(seqanno, seq)
                     except:
                         pass
                 else:
                     fastaseq = myfunc.ReadFile(seqfile_this_seq)#seq text in fasta format
                     (seqid, seqanno, seq) = myfunc.ReadSingleFasta(seqfile_this_seq)
-                    print("SEQ PARAMS SINGLE")
-                    print(seqid)
-                    print(seqanno)
-                    print(seq)
-                    print("FASTA SEQ")
-                    print(fastaseq)
 
 
                 isSubmitSuccess = False
@@ -1027,9 +1008,6 @@ def GetResult(jobid):#{{{
             else:
                 runtime = runtime1
 
-            #finalpredfile = "%s/%s/query_0.subcons-final-pred.csv"%(
-            #        outpath_this_seq, "final-prediction")
-            #(loc_def, loc_def_score) = webserver_common.GetLocDef(finalpredfile)
             info_finish = [ "seq_%d"%origIndex, str(len(seq)), 
                     'None', 'None',
                     "newrun", str(runtime), 'None']
@@ -1124,7 +1102,7 @@ def CheckIfJobFinished(jobid, numseq, email):#{{{
         if os.path.exists(base_www_url_file):
             base_www_url = myfunc.ReadFile(base_www_url_file).strip()
         if base_www_url == "":
-            base_www_url = "http://subcons.bioinfo.se"
+            base_www_url = "http://pathopred.bioinfo.se"
 
         date_str = time.strftime("%Y-%m-%d %H:%M:%S")
         date_str_epoch = time.time()
@@ -1166,14 +1144,14 @@ def CheckIfJobFinished(jobid, numseq, email):#{{{
             if os.path.exists(errfile):
                 err_msg = myfunc.ReadFile(errfile)
 
-            from_email = "info@subcons.bioinfo.se"
+            from_email = "info@pathopred.bioinfo.se"
             to_email = email
-            subject = "Your result for Subcons JOBID=%s"%(jobid)
+            subject = "Your result for Pathopred JOBID=%s"%(jobid)
             if finish_status == "success":
                 bodytext = """
     Your result is ready at %s/pred/result/%s
 
-    Thanks for using Subcons
+    Thanks for using Pathopred
 
             """%(base_www_url, jobid)
             elif finish_status == "failed":
@@ -1189,7 +1167,7 @@ def CheckIfJobFinished(jobid, numseq, email):#{{{
                 bodytext="""
     Your result is ready at %s/pred/result/%s
 
-    We are sorry that Subcons failed to predict some sequences of your job.
+    We are sorry that Pathopred failed to predict some sequences of your job.
 
     Please re-submit the queries that have been failed.
 

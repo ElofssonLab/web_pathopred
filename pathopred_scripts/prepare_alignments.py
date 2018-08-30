@@ -9,7 +9,7 @@ import glob
 import sys
 
 #split the results up into blocks of similarity ranges and e-val thresholds, store in fasta files
-def mask_blast(out_folder, seq_name, xml_file, fasta_file, E_VALUE_THRESH, identity_range):
+def mask_blast(out_folder, seq_name, xml_file, fasta_file, E_VALUE_THRESH, identity_range, dbpath):
 
 
     blast_save_name = out_folder + seq_name + '_' + str(identity_range[0]) + '-' + str(identity_range[1]) + '._blast.fasta'
@@ -53,7 +53,7 @@ def mask_blast(out_folder, seq_name, xml_file, fasta_file, E_VALUE_THRESH, ident
     id_string = ','.join(identifier_list)
 
     try:
-        out = check_output(['blastdbcmd', '-entry', id_string, '-outfmt', '%f'])
+        out = check_output(['blastdbcmd', '-entry', id_string, '-outfmt', '%f', '-db', dbpath])
         blast_save_file.write(out)
     except KeyboardInterrupt:
         print('Exiting..')
@@ -67,6 +67,8 @@ def mask_blast(out_folder, seq_name, xml_file, fasta_file, E_VALUE_THRESH, ident
 
 def align_sequence(out_folder, blast_file):
 
+    print("On align sequence\n")
+
     #make sure downloaded file is valid
     with open(blast_file,'r') as file:
         file.readline()
@@ -78,21 +80,18 @@ def align_sequence(out_folder, blast_file):
     out_file = blast_file.replace('_blast.fasta','clustal')
     script_folder = os.path.dirname(os.path.realpath(__file__))
 
-    mafft_exec = script_folder + "/mafft-linux64/mafft.bat"
+    #mafft_exec = script_folder + "/mafft-linux64/mafft.bat"
+    mafft_exec = script_folder + "/mafft-mac/mafft.bat"
     print(mafft_exec)
-    #thread option is not available on older versions of biopython
-    mafft_cline = MafftCommandline(cmd=mafft_exec, input=blast_file, auto=True, clustalout=True)
     assert os.path.isfile(mafft_exec), "MAFFT executable missing"
-    print("Aligning with..")
-    print(mafft_cline)
     try:
-        stdout, stderr = mafft_cline()
+        print("Aligning normal..\n")
         with open(out_file, 'w') as outmafft:
-            outmafft.write(stdout)
+            subprocess.call([mafft_exec, '--auto', '--thread', '-1', '--clustalout', blast_file], stdout = outmafft)
     except:
-        print(blast_base + " need anysymbol")
+        print(blast_file + " need anysymbol\n")
         with open(out_file, 'w') as outmafft:
-            print('Running with anysymbol..')
+            print('Running with anysymbol..\n')
             subprocess.call([mafft_exec, '--auto', '--thread', '-1', '--clustalout', '--anysymbol', blast_file], stdout = outmafft)
 
     return out_file
@@ -110,22 +109,23 @@ if __name__ == "__main__":
 
     num_args = len(sys.argv)
 
-    if num_args < 3:
-        print('Invalid arguments\nUsage: %s <fasta> <blastxml> <outfolder>' % sys.argv[0])
+    if num_args < 4:
+        print('Invalid arguments\nUsage: %s <fasta> <blastxml> <outfolder> <dbpath>' % sys.argv[0])
         sys.exit(1)
 
     #fasta first arg, xml is given as second arg, outfolder as third arg
     fasta_file = sys.argv[1]
     xml_file = sys.argv[2]
     out_folder = sys.argv[3]
+    dbpath = sys.argv[4]
 
     identifier = os.path.basename(fasta_file)
     identifier = os.path.splitext(identifier)[0]
     #given a single xml, sort and prepare alignment
 
     #First run the 100-90 range, then the 90-0 range
-    b_file_1 = mask_blast(out_folder, identifier, xml_file, fasta_file, 0.001, [100,90])
-    b_file_2 = mask_blast(out_folder, identifier, xml_file, fasta_file, 0.001, [90,0])
+    b_file_1 = mask_blast(out_folder, identifier, xml_file, fasta_file, 0.001, [100,90], dbpath)
+    b_file_2 = mask_blast(out_folder, identifier, xml_file, fasta_file, 0.001, [90,0], dbpath)
 
     #then align everything
     align_file_1 = align_sequence(out_folder, b_file_1)

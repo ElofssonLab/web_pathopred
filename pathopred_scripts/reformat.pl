@@ -28,6 +28,7 @@
 #     We are very grateful for bug reports! Please contact us at soeding@mpibpc.mpg.de
 
 use lib "/usr/lib/hhsuite/scripts";
+use lib "/Users/alex/pathopred_scripts/hhsuite_scripts";
 use HHPaths;   # config file with path variables for nr, blast, psipred, pdb, dssp etc.
 use strict;
 use warnings;
