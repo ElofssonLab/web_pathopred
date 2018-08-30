@@ -1,14 +1,14 @@
-#Web-server for SubCons
+#Web-server for Pathopred
 
 ##Description:
-    This is the web-server implementation of the SubCons workflow.
+    Front-end server for pathopred.
     The web-server is developed with Django (>=1.6.4)
 
 
     This software is open source and licensed under the GPL license
 
 ##Author
-Nanjiang Shu
+Based on software by Nanjiang Shu
 
 Short-term bioinformatics support at NBIS
 
