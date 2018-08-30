@@ -6,9 +6,9 @@ exec_cmd(){
 }
 rundir=`dirname $0`
 
-rundir=`readlink -f $rundir`
+rundir="/Users/alex/web_pathopred_frontend/"  #fix for OSX
+#rundir=`readlink -f $rundir`                 #fix for OSX
 cd $rundir
-
 
 filelist="
 $rundir/db.sqlite3
@@ -37,7 +37,7 @@ case $platform in
     centos|redhat) user=apache;group=apache;;
     ubuntu) user=www-data;group=www-data;;
     #other)echo Unrecognized plat form $platform_info; exit 1;;
-    other) user=www-data;group=www-data;;
+    other) user=_www;group=_www;;
 esac
 
 # change folder permission and add user to the apache group
@@ -52,6 +52,7 @@ for file in $filelist; do
     fi
 done
 
+echo "create dirs"
 for dir in  $dirlist; do
     if [ ! -d $dir ];then
         exec_cmd "sudo mkdir -p $dir"

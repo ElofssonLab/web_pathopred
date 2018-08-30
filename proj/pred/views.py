@@ -309,7 +309,7 @@ def submit_seq(request):#{{{
             Nfix = ""
             Cfix = ""
             fix_str = ""
-            isForceRun = False
+            isForceRun = True
             try:
                 Nfix = request.POST['Nfix']
             except:
@@ -385,10 +385,12 @@ def submit_seq(request):#{{{
 #                 cmd = [qd_fe_scriptfile]
                 base_www_url = "http://" + request.META['HTTP_HOST']
                 # run the daemon only at the frontend
-                if webserver_common.IsFrontEndNode(base_www_url):
-                    cmd = "nohup %s %s &"%(python_exec, qd_fe_scriptfile)
-                    os.system(cmd)
-
+                #if webserver_common.IsFrontEndNode(base_www_url):
+                #    cmd = "nohup %s %s &"%(python_exec, qd_fe_scriptfile)
+                #    os.system(cmd)
+                #####MAKE SURE QD_FE RUNS
+                #cmd = "nohup %s %s &"%(python_exec, qd_fe_scriptfile)
+                #os.system(cmd)
 
                 if query['numseq'] < 0: #go to result page anyway
                     query['jobcounter'] = GetJobCounter(client_ip, isSuperUser,

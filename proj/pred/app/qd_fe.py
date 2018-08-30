@@ -583,6 +583,12 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                     wsdl_url), gen_errfile, "a", True)
                 break
 
+
+            ############
+            print("NODES")
+            print(cntSubmitJobDict)
+            ############
+
             [cnt, maxnum] = cntSubmitJobDict[node]
             cnttry = 0
             while cnt < maxnum and iToRun < numToRun:
@@ -610,25 +616,33 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                         seqid = allseqidlist[origIndex]
                         seqanno = allannolist[origIndex]
                         seq = allseqlist[origIndex]
+                        print("SEQ PARAMS MULTI")
+                        print(allseqidlist)
+                        print(allannolist)
+                        print(allseqlist)
                         fastaseq = ">%s\n%s\n"%(seqanno, seq)
                     except:
                         pass
                 else:
                     fastaseq = myfunc.ReadFile(seqfile_this_seq)#seq text in fasta format
                     (seqid, seqanno, seq) = myfunc.ReadSingleFasta(seqfile_this_seq)
+                    print("SEQ PARAMS SINGLE")
+                    print(seqid)
+                    print(seqanno)
+                    print(seq)
+                    print("FASTA SEQ")
+                    print(fastaseq)
 
 
                 isSubmitSuccess = False
                 if len(seq) > 0:
                     query_para = {}
-                    #if wsdl_url.find("commonbackend") != -1:
-                    #    query_para['name_software'] = "docker_subcons"
-                    #else:
-                    #    query_para['name_software'] = "subcons"
                     query_para['name_software'] = "pathopred"
                     #include variants as a query parameter
                     variant_text = myfunc.ReadFile(variant_file)
                     query_para['variants'] = variant_text
+                    #also include the identifier name as a query parameter
+                    query_para['identifier_name'] = seqid
 
                     para_str = json.dumps(query_para, sort_keys=True)
                     jobname = ""
@@ -647,8 +661,16 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                         rtValue = []
                         pass
 
+
+                    ##DEV: what is in rtValue?
+                    print('rtValue:')
+                    print(rtValue)
+                    ####DEV: even on successful submit return value takes too long? force success
+                    #isSubmitSuccess = True
+
                     cnttry += 1
                     if len(rtValue) >= 1:
+
                         strs = rtValue[0]
                         if len(strs) >=5:
                             remote_jobid = strs[0]
@@ -830,6 +852,9 @@ def GetResult(jobid):#{{{
             pass
         isSuccess = False
         isFinish_remote = False
+
+        myfunc.WriteFile("Checking rtValue length\n", gen_logfile, "a", True)
+
         if len(rtValue) >= 1:
             ss2 = rtValue[0]
             if len(ss2)>=3:
@@ -881,9 +906,10 @@ def GetResult(jobid):#{{{
                                 myfunc.WriteFile( "[Date: %s] cmdline=%s\nerrmsg=%s\n"%(
                                         date_str, cmdline, str(e)), gen_errfile, "a", True)
                                 pass
-                            checkfile = "%s/plot/query_0.png"%(outpath_this_seq)
-                            if os.path.exists(checkfile):
-                                isSuccess = True
+                            #checkfile = "%s/plot/query_0.png"%(outpath_this_seq)
+                            #if os.path.exists(checkfile):
+                            #    isSuccess = True
+                            isSuccess = True
 
                             if isSuccess:
                                 # create or update the md5 cache
@@ -935,6 +961,8 @@ def GetResult(jobid):#{{{
                                 # delete the data on the remote server
                                 try:
                                     rtValue2 = myclient.service.deletejob(remote_jobid)
+                                    #rtValue2 = ""
+                                    pass
                                 except:
                                     date_str = time.strftime("%Y-%m-%d %H:%M:%S")
                                     myfunc.WriteFile( "[Date: %s] Failed to run myclient.service.deletejob(%s)\n"%(date_str, remote_jobid), gen_errfile, "a", True)
@@ -999,12 +1027,12 @@ def GetResult(jobid):#{{{
             else:
                 runtime = runtime1
 
-            finalpredfile = "%s/%s/query_0.subcons-final-pred.csv"%(
-                    outpath_this_seq, "final-prediction")
-            (loc_def, loc_def_score) = webserver_common.GetLocDef(finalpredfile)
+            #finalpredfile = "%s/%s/query_0.subcons-final-pred.csv"%(
+            #        outpath_this_seq, "final-prediction")
+            #(loc_def, loc_def_score) = webserver_common.GetLocDef(finalpredfile)
             info_finish = [ "seq_%d"%origIndex, str(len(seq)), 
-                    str(loc_def), str(loc_def_score),
-                    "newrun", str(runtime), description]
+                    'None', 'None',
+                    "newrun", str(runtime), 'None']
             finished_info_list.append("\t".join(info_finish))
             finished_idx_list.append(str(origIndex))#}}}
 
@@ -1049,6 +1077,7 @@ def GetResult(jobid):#{{{
     with open(cnttry_idx_file, 'w') as fpout:
         json.dump(cntTryDict, fpout)
 
+    myfunc.WriteFile("Exit get result\n", gen_logfile, "a", True)
 
 
     return 0
@@ -1112,9 +1141,6 @@ def CheckIfJobFinished(jobid, numseq, email):#{{{
         start_date_str = myfunc.ReadFile(starttagfile).strip()
         start_date_epoch = datetime.datetime.strptime(start_date_str, "%Y-%m-%d %H:%M:%S").strftime('%s')
         all_runtime_in_sec = float(date_str_epoch) - float(start_date_epoch)
-
-        webserver_common.WriteSubconsTextResultFile(resultfile_text, outpath_result, maplist,
-                all_runtime_in_sec, base_www_url, statfile=statfile)
 
         # now making zip instead (for windows users)
         # note that zip rq will zip the real data for symbolic links
