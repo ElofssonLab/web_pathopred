@@ -618,7 +618,7 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                 isSubmitSuccess = False
                 if len(seq) > 0:
                     query_para = {}
-                    query_para['name_software'] = "pathopred"
+                    query_para['name_software'] = "docker_pathopred"
                     #include variants as a query parameter
                     variant_text = myfunc.ReadFile(variant_file)
                     query_para['variants'] = variant_text
@@ -641,13 +641,6 @@ def SubmitJob(jobid,cntSubmitJobDict, numseq_this_user):#{{{
                         myfunc.WriteFile("[Date: %s] Failed to run myclient.service.submitjob_remote\n"%(date_str), gen_errfile, "a", True)
                         rtValue = []
                         pass
-
-
-                    ##DEV: what is in rtValue?
-                    print('rtValue:')
-                    print(rtValue)
-                    ####DEV: even on successful submit return value takes too long? force success
-                    #isSubmitSuccess = True
 
                     cnttry += 1
                     if len(rtValue) >= 1:
@@ -887,10 +880,10 @@ def GetResult(jobid):#{{{
                                 myfunc.WriteFile( "[Date: %s] cmdline=%s\nerrmsg=%s\n"%(
                                         date_str, cmdline, str(e)), gen_errfile, "a", True)
                                 pass
-                            #checkfile = "%s/plot/query_0.png"%(outpath_this_seq)
-                            #if os.path.exists(checkfile):
-                            #    isSuccess = True
-                            isSuccess = True
+
+                            checkfile = "%s/output_predictions"%(outpath_this_seq)
+                            if os.path.exists(checkfile):
+                                isSuccess = True
 
                             if isSuccess:
                                 # create or update the md5 cache
