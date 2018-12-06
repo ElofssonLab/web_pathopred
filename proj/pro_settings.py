@@ -27,9 +27,13 @@ with open('/etc/django_pro_secret_key.txt') as f:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
+<<<<<<< HEAD
 TEMPLATE_DEBUG = DEBUG
 
 ALLOWED_HOSTS = ['localhost', '*.pathopred.bioinfo.se', "pathopred.bioinfo.se", "dev.pathopred.bioinfo.se"]
+=======
+ALLOWED_HOSTS = ['localhost', '*.subcons.bioinfo.se', "subcons.bioinfo.se", "dev.subcons.bioinfo.se"]
+>>>>>>> 46764075be9fe4e64690bcd9f030b227f53c2f89
 
 computenodefile = "%s/pred/config/computenode.txt"%(BASE_DIR)
 if os.path.exists(computenodefile):

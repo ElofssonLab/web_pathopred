@@ -1,13 +1,13 @@
-#Web-server for Pathopred
+# Web-server for Pathopred
 
-##Description:
+## Description:
     Front-end server for pathopred.
-    The web-server is developed with Django (>=1.6.4)
+    The web-server is developed with Django 1.11.15 LTS
 
 
     This software is open source and licensed under the GPL license
 
-##Author
+## Author
 Based on software by Nanjiang Shu
 
 Short-term bioinformatics support at NBIS
