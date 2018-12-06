@@ -18,7 +18,7 @@ class SubmissionForm(forms.Form):
     rawseq = forms.CharField(label='', max_length=100000,
             widget=forms.Textarea(attrs={'cols': 62, 'rows': 10}),
             required=False)
-    variants = forms.CharField(label='', max_length=100000,
+    variants = forms.CharField(label='Please paste your variants definition here', max_length=100000,
             widget=forms.Textarea(attrs={'cols': 62, 'rows': 10}),
             required=False)
     seqfile = forms.FileField(label="Alternatively, upload sequences in FASTA format upto 100 MB", required=False)
