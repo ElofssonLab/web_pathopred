@@ -28,7 +28,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [u'dev.pathopred.bioinfo.se']
 
 STATIC_ROOT = "%s/pred/static"%(BASE_DIR)
 

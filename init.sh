@@ -4,10 +4,9 @@ exec_cmd(){
     echo "$*"
     eval "$*"
 }
-rundir=`dirname $0`
 
-rundir="/Users/alex/web_pathopred_frontend/"  #fix for OSX
-#rundir=`readlink -f $rundir`                 #fix for OSX
+rundir=$(python -c "import os; print(os.path.realpath(os.path.dirname('$0')))")
+
 cd $rundir
 
 filelist="
@@ -28,7 +27,8 @@ platform=
 case $platform_info in 
     *centos*)platform=centos;;
     *redhat*) platform=redhat;;
-    *ubuntu*)platform=ubuntu;;
+    *ubuntu*|*debian*)platform=ubuntu;;
+    *darwin)platform=osx;;
     *)platform=other;;
 esac
 
@@ -36,8 +36,8 @@ esac
 case $platform in 
     centos|redhat) user=apache;group=apache;;
     ubuntu) user=www-data;group=www-data;;
-    #other)echo Unrecognized plat form $platform_info; exit 1;;
-    other) user=_www;group=_www;;
+    osx) user=_www;group=_www;;
+    other)echo Unrecognized plat form $platform_info; exit 1;;
 esac
 
 # change folder permission and add user to the apache group
@@ -58,7 +58,7 @@ for dir in  $dirlist; do
         exec_cmd "sudo mkdir -p $dir"
     fi
     exec_cmd "sudo chmod 755 $dir"
-    exec_cmd "sudo chown $user:$group $dir"
+    exec_cmd "sudo chown -R $user:$group $dir"
 done
 
 logfile_submit=$rundir/proj/pred/static/log/submitted_seq.log
@@ -69,12 +69,20 @@ exec_cmd "sudo chmod 644 $logfile_submit"
 exec_cmd "sudo chown $user:$group $logfile_submit"
 
 # fix the settings.py
-if [ ! -f $rundir/proj/settings.py -a ! -L $rundir/proj/setttings.py ];then
+if [ ! -f $rundir/proj/settings.py -a ! -L $rundir/proj/settings.py ];then
     pushd $rundir/proj; ln -s pro_settings.py settings.py; popd;
 fi
 
 # create example result
-pushd $rundir/proj/pred/static/result &&\
-    if [ ! -d example_oneseq ]; then sudo ln -s ../download/example/example_oneseq  . ; fi &&\
-    if [ ! -d example_multiseq ]; then sudo ln -s ../download/example/example_multiseq . ; fi &&\
-    popd
+example_folder_list="
+example_oneseq
+example_multiseq
+"
+pushd $rundir/proj/pred/static/result
+
+for item in $example_folder_list; do
+    if [ ! -d $item ]; then
+        sudo ln -s ../download/example/$item  .
+    fi
+done
+popd
