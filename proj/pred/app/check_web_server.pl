@@ -24,8 +24,8 @@ my @to_email_list = (
 my $date = localtime();
 print "Date: $date\n";
 my $url = "";
-my $servername = "SubCons";
-my @urllist = ("http://subcons.bioinfo.se");
+my $servername = "Pathopred";
+my @urllist = ("http://pathopred.bioinfo.se");
 my $target_qd_script_name = "qd_fe.py";
 my $computenodelistfile = "$basedir/config/computenode.txt";
 my $alert_emaillist_file = "$basedir/config/alert_email.txt";
