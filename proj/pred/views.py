@@ -307,7 +307,7 @@ def submit_seq(request):#{{{
             Nfix = ""
             Cfix = ""
             fix_str = ""
-            isForceRun = True
+            isForceRun = False
             try:
                 Nfix = request.POST['Nfix']
             except:
