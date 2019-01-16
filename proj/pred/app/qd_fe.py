@@ -827,8 +827,6 @@ def GetResult(jobid):#{{{
         isSuccess = False
         isFinish_remote = False
 
-        myfunc.WriteFile("Checking rtValue length\n", gen_logfile, "a", True)
-
         if len(rtValue) >= 1:
             ss2 = rtValue[0]
             if len(ss2)>=3:
@@ -935,7 +933,6 @@ def GetResult(jobid):#{{{
                                 # delete the data on the remote server
                                 try:
                                     rtValue2 = myclient.service.deletejob(remote_jobid)
-                                    #rtValue2 = ""
                                     pass
                                 except:
                                     date_str = time.strftime("%Y-%m-%d %H:%M:%S")
@@ -1047,9 +1044,6 @@ def GetResult(jobid):#{{{
 
     with open(cnttry_idx_file, 'w') as fpout:
         json.dump(cntTryDict, fpout)
-
-    myfunc.WriteFile("Exit get result\n", gen_logfile, "a", True)
-
 
     return 0
 #}}}

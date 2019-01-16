@@ -1,1 +1,0 @@
-seq_0	325	sp|P04201|MAS_HUMAN

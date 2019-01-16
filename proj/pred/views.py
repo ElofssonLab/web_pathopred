@@ -1834,7 +1834,7 @@ def help_wsdl_api(request):#{{{
     info['client_ip'] = client_ip
 
 
-    api_script_rtname =  "subcons_wsdl"
+    api_script_rtname =  "pathopred_wsdl"
     extlist = [".py"]
     api_script_lang_list = ["Python"]
     api_script_info_list = []
