@@ -4,6 +4,7 @@
 #   A collection of classes and functions used by web-servers
 #
 # Author: Nanjiang Shu (nanjiang.shu@scilifelab.se)
+# Updated by https://github.com/akvpr
 #
 # Address: Science for Life Laboratory Stockholm, Box 1031, 17121 Solna, Sweden
 
@@ -14,70 +15,7 @@ import datetime
 import tabulate
 import re
 import logging
-def WriteSubconsTextResultFile(outfile, outpath_result, maplist,#{{{
-        runtime_in_sec, base_www_url, statfile=""):
-    try:
-        fpout = open(outfile, "w")
-        if statfile != "":
-            fpstat = open(statfile, "w")
 
-        date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print >> fpout, "##############################################################################"
-        print >> fpout, "Subcons result file"
-        print >> fpout, "Generated from %s at %s"%(base_www_url, date)
-        print >> fpout, "Total request time: %.1f seconds."%(runtime_in_sec)
-        print >> fpout, "##############################################################################"
-        cnt = 0
-        for line in maplist:
-            strs = line.split('\t')
-            subfoldername = strs[0]
-            length = int(strs[1])
-            desp = strs[2]
-            seq = strs[3]
-            seqid = myfunc.GetSeqIDFromAnnotation(desp)
-            print >> fpout, "Sequence number: %d"%(cnt+1)
-            print >> fpout, "Sequence name: %s"%(desp)
-            print >> fpout, "Sequence length: %d aa."%(length)
-            print >> fpout, "Sequence:\n%s\n\n"%(seq)
-
-            rstfile1 = "%s/%s/%s/query_0_final.csv"%(outpath_result, subfoldername, "plot")
-            rstfile2 = "%s/%s/query_0_final.csv"%(outpath_result, subfoldername)
-            if os.path.exists(rstfile1):
-                rstfile = rstfile1
-            elif os.path.exists(rstfile2):
-                rstfile = rstfile2
-            else:
-                rstfile = ""
-
-            if os.path.exists(rstfile):
-                content = myfunc.ReadFile(rstfile).strip()
-                lines = content.split("\n")
-                if len(lines) >= 6:
-                    header_line = lines[0].split("\t")
-                    if header_line[0].strip() == "":
-                        header_line[0] = "Method"
-                        header_line = [x.strip() for x in header_line]
-
-                    data_line = []
-                    for i in xrange(1, len(lines)):
-                        strs1 = lines[i].split("\t")
-                        strs1 = [x.strip() for x in strs1]
-                        data_line.append(strs1)
-
-                    content = tabulate.tabulate(data_line, header_line, 'plain')
-            else:
-                content = ""
-            if content == "":
-                content = "***No prediction could be produced with this method***"
-
-            print >> fpout, "Prediction results:\n\n%s\n\n"%(content)
-
-            print >> fpout, "##############################################################################"
-            cnt += 1
-
-    except IOError:
-        print "Failed to write to file %s"%(outfile)
-#}}}
 def ReplaceDescriptionSingleFastaFile(infile, new_desp):#{{{
     """Replace the description line of the fasta file by the new_desp
     """
@@ -91,34 +29,6 @@ def ReplaceDescriptionSingleFastaFile(infile, new_desp):#{{{
         return 1
 #}}}
 
-def GetLocDef(predfile):#{{{
-    """
-    Read in LocDef and its corresponding score from the subcons prediction file
-    """
-    content = ""
-    if os.path.exists(predfile):
-        content = myfunc.ReadFile(predfile)
-
-    loc_def = None
-    loc_def_score = None
-    if content != "":
-        lines = content.split("\n")
-        if len(lines)>=2:
-            strs0 = lines[0].split("\t")
-            strs1 = lines[1].split("\t")
-            strs0 = [x.strip() for x in strs0]
-            strs1 = [x.strip() for x in strs1]
-            if len(strs0) == len(strs1) and len(strs0) > 2:
-                if strs0[1] == "LOC_DEF":
-                    loc_def = strs1[1]
-                    dt_score = {}
-                    for i in xrange(2, len(strs0)):
-                        dt_score[strs0[i]] = strs1[i]
-                    if loc_def in dt_score:
-                        loc_def_score = dt_score[loc_def]
-
-    return (loc_def, loc_def_score)
-#}}}
 def IsFrontEndNode(base_www_url):#{{{
     """
     check if the base_www_url is front-end node
@@ -172,6 +82,7 @@ sequences
 
 
 #}}}
+
 def ValidateQuery(request, query, g_params):#{{{
     query['errinfo_br'] = ""
     query['errinfo_content'] = ""
@@ -217,9 +128,12 @@ def ValidateQuery(request, query, g_params):#{{{
         query['rawseq'] = content
 
     query['filtered_seq'] = ValidateSeq(query['rawseq'], query, g_params)
-    is_valid = query['isValidSeq']
+    query['filtered_variants'] = ValidateVariants(query['variants'], query, g_params)
+    is_valid = query['isValidSeq'] and query['isValidVariants']
+
     return is_valid
 #}}}
+
 def ValidateSeq(rawseq, seqinfo, g_params):#{{{
 # seq is the chunk of fasta file
 # seqinfo is a dictionary
@@ -376,6 +290,52 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
     seqinfo['errinfo'] = seqinfo['errinfo_br'] + seqinfo['errinfo_content']
     return filtered_seq
 #}}}
+
+def ValidateVariants(rawvariants, seqinfo, g_params):#{{{
+    # rawvariants is raw input from variants form
+    # seqinfo is a dictionary
+    # return (variants if valid)
+    rawvariants = re.sub(r'[^\x00-\x7f]',r' ',rawvariants) # remove non-ASCII characters
+    rawvariants = re.sub(r'[\x0b]',r' ',rawvariants) # filter invalid characters for XML
+    filtered_variants = ""
+
+    # initialization
+    for item in ['errinfo_br', 'errinfo', 'errinfo_content', 'warninfo']:
+        if item not in seqinfo:
+            seqinfo[item] = ""
+
+    seqinfo['isValidVariants'] = True
+    valid_aa = "ABCDEFGHIKLMNPQRSTUVWYZX"
+    li_err_info = []
+
+    # identifiers, starting with >, can keep any name
+    # we want to filter any variants not on the format AA,position,AA
+    for var_line in rawvariants.split('\n'):
+        stripped_line = re.sub("[\s\n\r\t]", '', var_line)
+        if not stripped_line.startswith('>'):
+            ref_aa = stripped_line[0].upper()
+            alt_aa = stripped_line[-1].upper()
+            position = stripped_line[1:-1]
+            if not ref_aa in valid_aa:
+                msg = "Bad letter for reference amino acid in variant %s (letter: '%s')"%(stripped_line, ref_aa)
+                li_err_info.append(msg)
+            if not alt_aa in valid_aa:
+                msg = "Bad letter for altered amino acid in variant %s (letter: '%s')"%(stripped_line, alt_aa)
+                li_err_info.append(msg)
+            if not position.isdigit():
+                msg = "Bad position value in variant %s (position: '%s')"%(stripped_line, position)
+                li_err_info.append(msg)
+
+    if len(li_err_info) > 0:
+        seqinfo['errinfo_content'] += "\n".join(li_err_info) + "\n"
+        seqinfo['isValidVariants'] = False
+    else:
+        filtered_variants = rawvariants
+
+    seqinfo['errinfo'] = seqinfo['errinfo_br'] + seqinfo['errinfo_content']
+    return filtered_variants
+#}}}
+
 def DeleteOldResult(path_result, path_log, gen_logfile, MAX_KEEP_DAYS=180):#{{{
     """
     Delete jobdirs that are finished > MAX_KEEP_DAYS

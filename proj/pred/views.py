@@ -349,8 +349,6 @@ def submit_seq(request):#{{{
 
             is_valid = webserver_common.ValidateQuery(request, query, g_params)
 
-            #We should add validation for the variants as well below
-
             if is_valid:
                 jobid = RunQuery(request, query)
 
@@ -619,8 +617,8 @@ def RunQuery(request, query):#{{{
     errmsg.append(myfunc.WriteFile(query['filtered_seq'], seqfile_t, "w"))
     errmsg.append(myfunc.WriteFile(query['filtered_seq'], seqfile_r, "w"))
 
-    errmsg.append(myfunc.WriteFile(query['variants'], variantfile_t, "w"))
-    errmsg.append(myfunc.WriteFile(query['variants'], variantfile_r, "w"))
+    errmsg.append(myfunc.WriteFile(query['filtered_variants'], variantfile_t, "w"))
+    errmsg.append(myfunc.WriteFile(query['filtered_variants'], variantfile_r, "w"))
 
     base_www_url = "http://" + request.META['HTTP_HOST']
     query['base_www_url'] = base_www_url
