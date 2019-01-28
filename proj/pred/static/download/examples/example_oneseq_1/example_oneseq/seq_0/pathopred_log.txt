@@ -1,0 +1,8 @@
+Starting pathopred script
+Starting BLAST with xml path /static/tmp/tmp_ZCQ31z/rst_R9qb06/seq_0/tmp/query_0.xml
+
+Creating alignments
+Attempting to generate prediction
+Using TensorFlow backend. 2019-01-19 21:10:41.207609: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA /usr/local/lib/python2.7/dist-packages/keras/engine/saving.py:304: UserWarning: Error in loading the saved optimizer state. As a result, your model is starting with a freshly initialized optimizer. warnings.warn('Error in loading the saved optimizer ' Identifier: P26439 Going through lines >P26439 P186L P222H P222Q All variants: ['P186L', 'P222H', 'P222Q'] /app/pathopred/go-basic.obo: fmt(1.2) rel(2018-03-07) 47,180 GO Terms Running predictions for variants On variant: P186L Prediction: [[0.6270671]] On variant: P222H Prediction: [[0.91614544]] On variant: P222Q Prediction: [[0.91354823]]
+Removing tmpdir
+Exiting pathopred script

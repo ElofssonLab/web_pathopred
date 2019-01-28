@@ -1,0 +1,3 @@
+#!/bin/bash
+source /Users/alex/web_pathopred/env/bin/activate
+/Users/alex/web_pathopred/env/bin/python2.7 /Users/alex/web_pathopred/proj/pred/app/run_job.py /Users/alex/web_pathopred/proj/pred/static/tmp/tmp_CWtJGW/query.fa /Users/alex/web_pathopred/proj/pred/static/tmp/tmp_CWtJGW/variants.fa -outpath /Users/alex/web_pathopred/proj/pred/static/result/rst_TMFFRX -tmpdir /Users/alex/web_pathopred/proj/pred/static/tmp/tmp_CWtJGW -jobid rst_TMFFRX -baseurl "http://localhost:8000" -only-get-cache 

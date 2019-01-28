@@ -1,0 +1,7 @@
+Go to SubmitJobToQueue()
+Entering SubmitJobToQueue()
+Write scriptfile /Users/alex/web_pathopred/proj/pred/static/result/rst_TMFFRX/runjob;pathopred;rst_TMFFRX;127.0.0.1;;1.sh
+Getting priority
+priority=301484333
+cmdline: /Users/alex/web_pathopred/env/bin/python2.7 /Users/alex/web_pathopred/proj/pred/app/submit_job_to_queue.py -nseq 1 -nseq-this-user 1 -jobid rst_TMFFRX -outpath /Users/alex/web_pathopred/proj/pred/static/result/rst_TMFFRX -datapath /Users/alex/web_pathopred/proj/pred/static/tmp/tmp_CWtJGW -baseurl http://localhost:8000 -host 127.0.0.1 -only-get-cache
+
