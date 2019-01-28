@@ -112,10 +112,8 @@ def SubmitJobToQueue(jobid, datapath, outpath, numseq, numseq_this_user, email, 
     myfunc.WriteFile("priority=%d\n"%(priority), g_params['debugfile'], "a",
             True)
 
-    ## Do not invoke suq -- be satisfied with only creating job folder with files
-    #st1 = SubmitSuqJob(suq_basedir, datapath, outpath, priority, scriptfile)
-    #return st1
-    return 0
+    st1 = SubmitSuqJob(suq_basedir, datapath, outpath, priority, scriptfile)
+    return st1
 
 #}}}
 def SubmitSuqJob(suq_basedir, datapath, outpath, priority, scriptfile):#{{{
