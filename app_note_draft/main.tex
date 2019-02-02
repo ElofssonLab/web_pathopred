@@ -1,0 +1,162 @@
+\documentclass{bioinfo}
+\copyrightyear{2015} \pubyear{2015}
+
+\access{Advance Access Publication Date: Day Month Year}
+\appnotes{Applications Note}
+
+\begin{document}
+\firstpage{1}
+
+\subtitle{Sequence analysis}
+
+\title[short Title]{Pathopred Web Server: deep convolutional neural network predicting pathogenicity of non-synonymous human SNPs}
+\author[Sample \textit{et~al}.]{Corresponding Author\,$^{\text{\sfb 1,}*}$, Co-Author\,$^{\text{\sfb 2}}$ and Co-Author\,$^{\text{\sfb 2,}*}$}
+\address{$^{\text{\sf 1}}$Department, Institution, City, Post Code, Country and \\
+$^{\text{\sf 2}}$Department, Institution, City, Post Code,
+Country.}
+
+\corresp{$^\ast$To whom correspondence should be addressed.}
+
+\history{Received on XXXXX; revised on XXXXX; accepted on XXXXX}
+
+\editor{Associate Editor: XXXXXXX}
+
+\abstract{\textbf{Summary:} Computational tools assist in interpreting an increasing amount of data generated from large scale sequencing projects. Using novel machine learning methods and incorporating sequence information, structural information, annotations and evolutionary conservation information, high prediction accuracy of harmful amino acid substitutions in human proteins can be achieved. Trained on a VariBench benchmark dataset, a deep convolutional neural network achieves an improved prediction accuracy compared to previous methods, with an accuracy and MCC of 0.81 and 0.62 on an independent VariBench test set, respectively, when predicting the probability of pathogenic substitutions.\\
+\textbf{Availability and Implementation:} The pathopred web server is freely available at http://www.pathopred.bioinfo.se/\\
+\textbf{Contact:} \href{name@bio.com}{name@bio.com}\\
+\textbf{Supplementary information:} Supplementary data are available at \textit{Bioinformatics}
+online.}
+
+\maketitle
+
+\section{Introduction}
+
+Single nucleotide polymorphisms (SNPs) make up much of the genetic variation between humans. SNPs located in non-coding regions of the human genome can cause amino acid changes in the final protein product of genes. These non-synonymous single nucleotide polymorphisms (nsSNPs) have been found to be linked to human disorders and are documented in variation databases such as HGMD and dbSNP.
+
+With an increasing amount of variants being found and documented as sequencing technologies advance, computationally screening these variants to find those valuable for further study is important. Various computational tools exist to predict the effects of variants. The effects that these tools attempt to predict range from protein stability to the impact on transcription factor binding, to the likelihood that a variant is involved in disease. 
+
+Machine learning methods such as PON-P2 and PolyPhen-2 focus on the pathogenicity of nsSNPs, that is, the probability that a variant is damaging or involved in disease. These tools, and many other variant prediction tools like them, will often employ features from sequence annotations, properties of multiple sequence alignments (MSAs) constructed from protein homologues, or biochemical properties of amino acids. Certain predictors such as PON-PS will also attempt to predict the severity of a disease phenotype arising from an amino acid substitution. 
+
+Benchmark such as VariBench systematically collect and organize datasets from databases, including dbSNP, and is used for training computational predictors and benchmarking their performance.
+
+One such dataset contains tolerance variants, and was used for training a predictor.. 
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text
+Text Text  Text Text Text Text Text Text. Figure~\ref{fig:01}
+shows that the above method  Text Text Text Text  Text Text Text
+Text Text Text  Text Text.
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text
+Text Text  Text Text Text Text Text Text. Figure~\ref{fig:01}
+shows that the above method  Text Text Text Text  Text Text Text
+Text Text Text  Text Text.
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text
+Text Text  Text Text Text Text Text Text. Figure~\ref{fig:01}
+shows that the above method  Text Text Text Text  Text Text Text
+Text Text Text  Text Text.
+
+%\enlargethispage{12pt}
+
+
+\begin{methods}
+
+\section{Materials and methods}
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text
+Text Text  Text Text Text Text Text Text.
+
+\end{methods}
+
+
+\section{Results and discussion}
+
+Text Text Text Text Text Text  Text Text Text Text Text Text Text
+Text Text  Text Text Text Text Text Text.
+
+\begin{table}[!t]
+\processtable{This is table caption\label{Tab:01}} {\begin{tabular}{@{}llll@{}}\toprule head1 &
+head2 & head3 & head4\\\midrule
+row1 & row1 & row1 & row1\\
+row2 & row2 & row2 & row2\\
+row3 & row3 & row3 & row3\\
+row4 & row4 & row4 & row4\\\botrule
+\end{tabular}}{This is a footnote}
+\end{table}
+
+\begin{figure}[!tpb]%figure1
+\fboxsep=0pt\colorbox{gray}{\begin{minipage}[t]{235pt} \vbox to 100pt{\vfill\hbox to
+235pt{\hfill\fontsize{24pt}{24pt}\selectfont FPO\hfill}\vfill}
+\end{minipage}}
+%\centerline{\includegraphics{fig01.eps}}
+\caption{Caption, caption.}\label{fig:01}
+\end{figure}
+
+%\begin{figure}[!tpb]%figure2
+%%\centerline{\includegraphics{fig02.eps}}
+%\caption{Caption, caption.}\label{fig:02}
+%\end{figure}
+
+Table~\ref{Tab:01} shows that Text Text Text Text Text  Text Text
+Text Text Text Text. Figure~1\vphantom{\ref{fig:01}} shows that
+the above method Text Text. 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     please remove the " % " symbol from \centerline{\includegraphics{fig01.eps}}
+%     as it may ignore the figures.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{Funding}
+
+This work has been supported by the... Text Text  Text Text.\vspace*{-12pt}
+
+%\bibliographystyle{natbib}
+%\bibliographystyle{achemnat}
+%\bibliographystyle{plainnat}
+%\bibliographystyle{abbrv}
+%\bibliographystyle{bioinformatics}
+%
+%\bibliographystyle{plain}
+%
+%\bibliography{Document}
+
+
+\begin{thebibliography}{}
+
+\bibitem[Bofelli {\it et~al}., 2000]{Boffelli03}
+Bofelli,F., Name2, Name3 (2003) Article title, {\it Journal Name}, {\bf 199}, 133-154.
+
+\bibitem[Bag {\it et~al}., 2001]{Bag01}
+Bag,M., Name2, Name3 (2001) Article title, {\it Journal Name}, {\bf 99}, 33-54.
+
+\bibitem[Yoo \textit{et~al}., 2003]{Yoo03}
+Yoo,M.S. \textit{et~al}. (2003) Oxidative stress regulated genes
+in nigral dopaminergic neurnol cell: correlation with the known
+pathology in Parkinson's disease. \textit{Brain Res. Mol. Brain
+Res.}, \textbf{110}(Suppl. 1), 76--84.
+
+\bibitem[Lehmann, 1986]{Leh86}
+Lehmann,E.L. (1986) Chapter title. \textit{Book Title}. Vol.~1, 2nd edn. Springer-Verlag, New York.
+
+\bibitem[Crenshaw and Jones, 2003]{Cre03}
+Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clinical
+cancer management: one tumor, one chip. \textit{Bioinformatics},
+doi:10.1093/bioinformatics/btn000.
+
+\bibitem[Auhtor \textit{et~al}. (2000)]{Aut00}
+Auhtor,A.B. \textit{et~al}. (2000) Chapter title. In Smith, A.C.
+(ed.), \textit{Book Title}, 2nd edn. Publisher, Location, Vol. 1, pp.
+???--???.
+
+\bibitem[Bardet, 1920]{Bar20}
+Bardet, G. (1920) Sur un syndrome d'obesite infantile avec
+polydactylie et retinite pigmentaire (contribution a l'etude des
+formes cliniques de l'obesite hypophysaire). PhD Thesis, name of
+institution, Paris, France.
+
+\end{thebibliography}
+\end{document}
