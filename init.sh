@@ -82,7 +82,7 @@ pushd $rundir/proj/pred/static/result
 
 for item in $example_folder_list; do
     if [ ! -d $item ]; then
-        sudo ln -s ../download/example/$item  .
+        sudo ln -s ../download/examples/$item  .
     fi
 done
 popd
