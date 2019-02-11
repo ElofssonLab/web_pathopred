@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.1.29)  2 FEB 2019 16:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.1.29)  11 FEB 2019 19:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -516,83 +516,113 @@ Overfull \hbox (1.12001pt too wide) has occurred while \output is active
 
 
  <./OUP_First_SBk_Bot_8401-eps-converted-to.pdf>]
-LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 84.
+LaTeX Font Info:    Calculating math sizes for size <7.5> on input line 83.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <7.5> not available
-(Font)              size <7> substituted on input line 84.
+(Font)              size <7> substituted on input line 83.
 
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <3.75> not available
-(Font)              size <5> substituted on input line 84.
+(Font)              size <5> substituted on input line 83.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <7.5> not available
-(Font)              size <7> substituted on input line 84.
+(Font)              size <7> substituted on input line 83.
 
 
 LaTeX Font Warning: Font shape `OML/cmm/m/it' in size <3.75> not available
-(Font)              size <5> substituted on input line 84.
+(Font)              size <5> substituted on input line 83.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <7.5> not available
-(Font)              size <7> substituted on input line 84.
+(Font)              size <7> substituted on input line 83.
 
 
 LaTeX Font Warning: Font shape `OMS/cmsy/m/n' in size <3.75> not available
-(Font)              size <5> substituted on input line 84.
+(Font)              size <5> substituted on input line 83.
 
-LaTeX Font Info:    Try loading font information for LY1+phb on input line 84.
-LaTeX Font Info:    No file LY1phb.fd. on input line 84.
+LaTeX Font Info:    Try loading font information for LY1+phb on input line 83.
+LaTeX Font Info:    No file LY1phb.fd. on input line 83.
 
 LaTeX Font Warning: Font shape `LY1/phb/m/n' undefined
-(Font)              using `LY1/ptm/m/n' instead on input line 84.
+(Font)              using `LY1/ptm/m/n' instead on input line 83.
 
 
 LaTeX Font Warning: Font shape `LY1/phb/bx/n' undefined
-(Font)              using `LY1/phb/m/n' instead on input line 84.
+(Font)              using `LY1/phb/m/n' instead on input line 83.
 
 
-Overfull \hbox (12.0pt too wide) in paragraph at lines 84--84
+Overfull \hbox (12.0pt too wide) in paragraph at lines 83--83
 []$[]$ 
  []
 
-
-Overfull \hbox (1.0pt too wide) in paragraph at lines 90--92
-[][][][][][][] 
- []
-
+<varibench_tolerance_test_ROC.png, id=19, 462.528pt x 346.896pt>
+File: varibench_tolerance_test_ROC.png Graphic file (type png)
+<use varibench_tolerance_test_ROC.png>
+Package pdftex.def Info: varibench_tolerance_test_ROC.png  used on input line 8
+8.
+(pdftex.def)             Requested size: 231.26343pt x 173.44757pt.
 LaTeX Font Info:    Font shape `LY1/phv/bx/n' in size <6.5> not available
-(Font)              Font shape `LY1/phv/b/n' tried instead on input line 92.
+(Font)              Font shape `LY1/phv/b/n' tried instead on input line 89.
 LaTeX Font Info:    Font shape `LY1/ptm/bx/n' in size <7> not available
-(Font)              Font shape `LY1/ptm/b/n' tried instead on input line 131.
-
-Underfull \hbox (badness 10000) in paragraph at lines 146--149
-[]\LY1/ptm/m/n/7 Crenshaw, B.,III, and Jones, W.B.,Jr (2003) The future of clin
-ical
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 146--149
-\LY1/ptm/m/n/7 cancer management: one tumor, one chip. \LY1/ptm/m/it/7 Bioinfor
-matics\LY1/ptm/m/n/7 ,
- []
-
-Extra height:0.0pt when 289.59723pt
-(2)Left:289.59723pt Right:279.0pt Output:289.59723pt
-- LAST -
-Extra skip:0.0pt
-Left:289.59723pt
-Right:279.0pt
-Output:289.59723pt
+(Font)              Font shape `LY1/ptm/b/n' tried instead on input line 111.
 LaTeX Font Info:    Font shape `LY1/phv/m/it' in size <8> not available
-(Font)              Font shape `LY1/phv/m/sl' tried instead on input line 162.
+(Font)              Font shape `LY1/phv/m/sl' tried instead on input line 139.
 
 Overfull \hbox (252.0pt too wide) has occurred while \output is active
 [][] 
  []
 
-[2
+[2 <./varibench_tolerance_test_ROC.png>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 37.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 38.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 39.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 40.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 41.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 42.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 43.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 44.0pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Extra height:10.0pt when 45.0pt
+Extra height:0.0pt when 46.0pt
+(2)Left:46.0pt Right:29.0pt Output:46.0pt
+- LAST -
+Extra skip:0.0pt
+Left:46.0pt
+Right:29.0pt
+Output:46.0pt
+
+Overfull \hbox (252.0pt too wide) has occurred while \output is active
+[][] 
+ []
+
+[3
 
 ] (./main.aux)
 
@@ -604,13 +634,13 @@ LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
  ) 
 Here is how much of TeX's memory you used:
- 3630 strings out of 492649
- 45227 string characters out of 6129622
- 119321 words of memory out of 5000000
- 7418 multiletter control sequences out of 15000+600000
+ 3640 strings out of 492649
+ 45493 string characters out of 6129622
+ 118374 words of memory out of 5000000
+ 7426 multiletter control sequences out of 15000+600000
  56505 words of font info for 104 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
- 41i,10n,29p,716b,288s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,14n,31p,904b,323s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}</usr/lo
 cal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy9.pfb></us
 r/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/
@@ -622,10 +652,10 @@ ist/fonts/type1/urw/helvetic/uhvro8ac.pfb></usr/local/texlive/2018/texmf-dist/f
 onts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
 /urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
 /utmri8a.pfb>
-Output written on main.pdf (2 pages, 92731 bytes).
+Output written on main.pdf (3 pages, 144048 bytes).
 PDF statistics:
- 57 PDF objects out of 1000 (max. 8388607)
- 40 compressed objects within 1 object stream
+ 63 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 11 words of extra memory for PDF output out of 10000 (max. 10000000)
 
