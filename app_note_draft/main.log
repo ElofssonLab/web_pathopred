@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.1.29)  11 FEB 2019 19:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2018) (preloaded format=pdflatex 2019.1.29)  11 FEB 2019 20:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -568,7 +568,7 @@ LaTeX Font Info:    Font shape `LY1/phv/bx/n' in size <6.5> not available
 LaTeX Font Info:    Font shape `LY1/ptm/bx/n' in size <7> not available
 (Font)              Font shape `LY1/ptm/b/n' tried instead on input line 111.
 LaTeX Font Info:    Font shape `LY1/phv/m/it' in size <8> not available
-(Font)              Font shape `LY1/phv/m/sl' tried instead on input line 139.
+(Font)              Font shape `LY1/phv/m/sl' tried instead on input line 134.
 
 Overfull \hbox (252.0pt too wide) has occurred while \output is active
 [][] 
@@ -577,46 +577,39 @@ Overfull \hbox (252.0pt too wide) has occurred while \output is active
 [2 <./varibench_tolerance_test_ROC.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 37.0pt
+Extra height:10.0pt when 50.5pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 38.0pt
+Extra height:10.0pt when 51.5pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 39.0pt
+Extra height:10.0pt when 52.5pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 40.0pt
+Extra height:10.0pt when 53.5pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 41.0pt
+Extra height:10.0pt when 54.5pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 42.0pt
+Extra height:0.0pt when 55.5pt
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-Extra height:10.0pt when 43.0pt
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-Extra height:10.0pt when 44.0pt
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-Extra height:10.0pt when 45.0pt
-Extra height:0.0pt when 46.0pt
-(2)Left:46.0pt Right:29.0pt Output:46.0pt
+(2)Left:55.5pt Right:47.0pt Output:55.5pt
 - LAST -
 Extra skip:0.0pt
-Left:46.0pt
-Right:29.0pt
-Output:46.0pt
+Left:55.5pt
+Right:47.0pt
+Output:55.5pt
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 
 Overfull \hbox (252.0pt too wide) has occurred while \output is active
 [][] 
@@ -640,7 +633,7 @@ Here is how much of TeX's memory you used:
  7426 multiletter control sequences out of 15000+600000
  56505 words of font info for 104 fonts, out of 8000000 for 9000
  1145 hyphenation exceptions out of 8191
- 41i,14n,31p,904b,323s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,14n,31p,904b,317s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2018/texmf-dist/fonts/enc/dvips/ly1/texnansi.enc}</usr/lo
 cal/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmbsy9.pfb></us
 r/local/texlive/2018/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/
@@ -652,7 +645,7 @@ ist/fonts/type1/urw/helvetic/uhvro8ac.pfb></usr/local/texlive/2018/texmf-dist/f
 onts/type1/urw/times/utmb8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1
 /urw/times/utmr8a.pfb></usr/local/texlive/2018/texmf-dist/fonts/type1/urw/times
 /utmri8a.pfb>
-Output written on main.pdf (3 pages, 144048 bytes).
+Output written on main.pdf (3 pages, 144106 bytes).
 PDF statistics:
  63 PDF objects out of 1000 (max. 8388607)
  43 compressed objects within 1 object stream

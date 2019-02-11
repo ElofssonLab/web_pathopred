@@ -91,7 +91,7 @@ Provean & 0.67 & 0.78 & 0.74 & 0.72 & 0.73 & 0.46\\\botrule
 
 Results of the model on the independent VariBench test set for binary pathogenicity prediction are presented in Table~\ref{Tab:01}, along with several others predictors evaluated in \citep{Niroula2015}. Pathopred improves on the other methods with an MCC of 0.62. An independent evaluation with predictors found to have high prediction accuracies in literature on the VariBench test set as well as other test sets can be seen in Figure~\ref{fig:01}. The ROC curves of Pathopred along with PON-P2 and two other predictors MVP \citep{Qi2018}, an ensemble method, and FATHMM \citep{Shihab2013} are presented. Pathopred shows a higher AUC than both PON-P2 and FATHMM with an AUC of 0.88, but scores lower than MVP, which shows an AUC of 0.92. It should be noted that the MVP score in this comparison is likely biased because of training data overlap with test data \citep{Kvist2018}. 
 
-When predicting severity classes on an independent VariBench test set, Pathopred achieves an MCC of 0.21 \citep{Kvist2018}, as compared to PON-PS with an MCC of 0.22 \citep{Niroula2017}. In conclusion, while the severity prediction performs similar to earlier best performing models, the binary predictions are significantly improved.
+When predicting severity classes, distunguishing between non-severe (mild and moderate) and severe on an independent VariBench test set, Pathopred achieves an MCC of 0.21 \citep{Kvist2018}, as compared to PON-PS with an MCC of 0.22 \citep{Niroula2017}. In conclusion, while the severity prediction performs similar to earlier best performing models, the binary predictions are significantly improved.
 
 \section*{Funding}
 
