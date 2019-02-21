@@ -22,30 +22,26 @@ $Arne Elofsson^{\text{\sf 2}}$Dep of Biochemistry and Biophysics and
 
 \editor{Associate Editor: XXXXXXX}
 
-\abstract{\textbf{Summary:} Computational tools assist in interpreting
-  SNPs is important for the fast increasing amount of data generated
+\abstract{
+\textbf{Summary:} Computational tools assist in interpreting
+  SNPs which is important for the fast increasing amount of data generated
   from large scale sequencing projects of individual humans.  Here, we
   show that by using novel machine learning methods and incorporating
   sequence information, structural information, annotations and
   evolutionary conservation information, high prediction accuracy of
   harmful amino acid substitutions in human proteins can be
-  achieved. The model PathoPred, when trained on a VariBench benchmark
-  dataset, a deep convolutional neural network achieves an improved
-  prediction accuracy compared to previous individual methods, with an
-  accuracy and MCC of 0.81 and 0.62 on an independent VariBench test
-  set, respectively,
-  when predicting the probability of pathogenic substitutions.\\
-
-
+  achieved. The model PathoPred, a deep convolutional neural network, when trained on a VariBench benchmark
+  dataset, achieves an improved prediction accuracy when predicting the probability of pathogenic substitutions compared to previous 
+  individual methods, with an accuracy and MCC of 0.81 and 0.62 on an independent VariBench test
+  set, respectively.\\
 \textbf{Availability and Implementation:} The pathopred web server is
 freely available at http://pathopred.bioinfo.se/. GPL licensed source code of
 all pathopred specific programs and scripts can be obtained from
-https://github.com/ElofssonLab/web_pathopred/ \\
-
+https://github.com/ElofssonLab/web\_pathopred/ \\
 \textbf{Contact:} \href{arne@bioinfo.se}{arne@bioinfo.se}\\
-
 \textbf{Supplementary information:} Supplementary data are available at \textit{Bioinformatics}
-online.}
+online.
+}
 
 \maketitle
 
@@ -136,9 +132,9 @@ found in UniProtKB for the protein analyzed.
 The deep convolutional neural network consists of several layers of
 one-dimensional blocks with a ResNet structure, ending in a
 fully-connected layer of 128 neurons with a sigmoid output layer for
-binary pathogenicity predictions, and a three-neuron softmax layer for
-severity predictions, see supplementary material. The predictors are
-built using the Keras library \citep{Chollet2017} and training is
+binary pathogenicity predictions, as well as for predicting between severe 
+and non-severe pathogenic substitutions, see supplementary material. 
+The predictors are built using the Keras library \citep{Chollet2017} and training is
 guided by the Adam optimizer.
 
 \end{methods}
