@@ -78,6 +78,16 @@ g_params['MIN_LEN_SEQ']  = 10      # minimum length of the query sequence
 g_params['MAX_LEN_SEQ']  = 10000   # maximum length of the query sequence
 g_params['MAXSIZE_UPLOAD_FILE_IN_BYTE']  = g_params['MAXSIZE_UPLOAD_FILE_IN_MB'] * 1024*1024
 g_params['DEBUG'] = False
+g_params['FORMAT_DATETIME'] = webcom.FORMAT_DATETIME
+g_params['STATIC_URL'] = settings.STATIC_URL
+g_params['SUPER_USER_LIST'] = settings.SUPER_USER_LIST
+g_params['path_static'] = path_static
+g_params['path_stat'] = path_stat
+g_params['SITE_ROOT'] = SITE_ROOT
+g_params['path_result'] = path_result
+g_params['MAX_ACTIVE_USER'] = 10
+g_params['suq_basedir'] = "/tmp"
+g_params['suq_exec'] = "/usr/bin/suq";
 
 
 qd_fe_scriptfile = "%s/qd_fe.py"%(path_app)
