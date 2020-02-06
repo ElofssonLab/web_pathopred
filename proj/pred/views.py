@@ -718,7 +718,7 @@ def get_results(request, jobid="1"):#{{{
         submit_date = webcom.datetime_str_to_time(submit_date_str)
     except ValueError:
         isValidSubmitDate = False
-    current_time = datetime.datetime.now()
+    current_time = datetime.now(timezone(TZ))
 
     resultdict['isResultFolderExist'] = True
     resultdict['errinfo'] = ""
