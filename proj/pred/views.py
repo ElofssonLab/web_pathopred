@@ -679,25 +679,7 @@ def download(request):#{{{
 
 def get_results(request, jobid="1"):#{{{
     resultdict = {}
-
-    username = request.user.username
-    client_ip = request.META['REMOTE_ADDR']
-    if username in settings.SUPER_USER_LIST:
-        isSuperUser = True
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "submitted_seq.log")
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "finished_job.log")
-    else:
-        isSuperUser = False
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_submitted_seq.log"%(client_ip))
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_finished_job.log"%(client_ip))
-
-    resultdict['username'] = username
-    resultdict['isSuperUser'] = isSuperUser
-    resultdict['client_ip'] = client_ip
+    webcom.set_basic_config(request, resultdict, g_params)
 
     rstdir = "%s/%s"%(path_result, jobid)
     outpathname = jobid
@@ -733,7 +715,7 @@ def get_results(request, jobid="1"):#{{{
 
     isValidSubmitDate = True
     try:
-        submit_date = datetime.datetime.strptime(submit_date_str, "%Y-%m-%d %H:%M:%S")
+        submit_date = webcom.datetime_str_to_time(submit_date_str)
     except ValueError:
         isValidSubmitDate = False
     current_time = datetime.datetime.now()
@@ -762,12 +744,12 @@ def get_results(request, jobid="1"):#{{{
         isValidStartDate = True
         isValidFailedDate = True
         try:
-            start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d %H:%M:%S")
+            start_date = webcom.datetime_str_to_time(start_date_str)
         except ValueError:
             isValidStartDate = False
         failed_date_str = myfunc.ReadFile(failtagfile).strip()
         try:
-            failed_date = datetime.datetime.strptime(failed_date_str, "%Y-%m-%d %H:%M:%S")
+            failed_date = webcom.datetime_str_to_time(failed_date_str)
         except ValueError:
             isValidFailedDate = False
         if isValidSubmitDate and isValidStartDate:
@@ -787,12 +769,12 @@ def get_results(request, jobid="1"):#{{{
             else:
                 start_date_str = ""
             try:
-                start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d %H:%M:%S")
+                start_date = webcom.datetime_str_to_time(start_date_str)
             except ValueError:
                 isValidStartDate = False
             finish_date_str = myfunc.ReadFile(finishtagfile).strip()
             try:
-                finish_date = datetime.datetime.strptime(finish_date_str, "%Y-%m-%d %H:%M:%S")
+                finish_date = webcom.datetime_str_to_time(finish_date_str)
             except ValueError:
                 isValidFinishDate = False
             if isValidSubmitDate and isValidStartDate:
@@ -807,7 +789,7 @@ def get_results(request, jobid="1"):#{{{
                 if os.path.exists(starttagfile):
                     start_date_str = myfunc.ReadFile(starttagfile).strip()
                 try:
-                    start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d %H:%M:%S")
+                    start_date = webcom.datetime_str_to_time(start_date_str)
                 except ValueError:
                     isValidStartDate = False
                 resultdict['isStarted'] = True
@@ -881,7 +863,7 @@ def get_results(request, jobid="1"):#{{{
                 except:
                     runtime_in_sec_str = ""
                 desp = strs[6]
-                
+
                 #Attempt to read the output prediction file in the subfolder
                 output_pred_file = "%s/%s/%s/output_predictions"%(rstdir, jobid, subfolder)
                 resultdict['output_pred_file'] = None   
@@ -979,34 +961,14 @@ def get_results(request, jobid="1"):#{{{
                 resultdict[newkey] = percent
 #}}}
     resultdict['MAX_ROWS_TO_SHOW_IN_TABLE'] = g_params['MAX_ROWS_TO_SHOW_IN_TABLE']
-    resultdict['jobcounter'] = GetJobCounter(client_ip, isSuperUser,
-            divided_logfile_query, divided_logfile_finished_jobid)
-    resultdict['STATIC_URL'] = settings.STATIC_URL
+    resultdict['jobcounter'] = webcom.GetJobCounter(resultdict)
     return render(request, 'pred/get_results.html', resultdict)
 #}}}
 def get_results_eachseq(request, jobid="1", seqindex="1"):#{{{
     resultdict = {}
 
-    resultdict['isAllNonTM'] = True
+    webcom.set_basic_config(request, resultdict, g_params)
 
-    username = request.user.username
-    client_ip = request.META['REMOTE_ADDR']
-    if username in settings.SUPER_USER_LIST:
-        isSuperUser = True
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "submitted_seq.log")
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "finished_job.log")
-    else:
-        isSuperUser = False
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_submitted_seq.log"%(client_ip))
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_finished_job.log"%(client_ip))
-
-    resultdict['username'] = username
-    resultdict['isSuperUser'] = isSuperUser
-    resultdict['client_ip'] = client_ip
 
     rstdir = "%s/%s"%(path_result, jobid)
     outpathname = jobid
@@ -1051,9 +1013,7 @@ def get_results_eachseq(request, jobid="1", seqindex="1"):#{{{
     else:
         resultdict['resultfile'] = ""
 
-    resultdict['jobcounter'] = GetJobCounter(client_ip, isSuperUser,
-            divided_logfile_query, divided_logfile_finished_jobid)
-    resultdict['STATIC_URL'] = settings.STATIC_URL
+    resultdict['jobcounter'] = webcom.GetJobCounter(resultdict)
     return render(request, 'pred/get_results_eachseq.html', resultdict)
 #}}}
 
