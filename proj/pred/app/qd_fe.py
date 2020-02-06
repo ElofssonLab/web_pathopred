@@ -16,10 +16,16 @@ site.addsitedir("%s/env/lib/python2.7/site-packages/"%(webserver_root))
 sys.path.append("%s/env/lib/python2.7/site-packages/"%(webserver_root))
 sys.path.append("/usr/local/lib/python2.7/dist-packages")
 
-import myfunc
-import webserver_common
+from libpredweb import myfunc
+from libpredweb import dataprocess
+from libpredweb import webserver_common as webcom
+from libpredweb import qd_fe_common as qdcom
+
+from datetime import datetime
+from dateutil import parser as dtparser
+from pytz import timezone
+
 import time
-import datetime
 import requests
 import json
 import urllib.request, urllib.parse, urllib.error
@@ -32,7 +38,8 @@ import numpy
 from geoip import geolite2
 import pycountry
 
-os.environ['TZ'] = 'Europe/Stockholm'
+TZ = webcom.TZ
+os.environ['TZ'] = TZ
 time.tzset()
 
 vip_user_list = [
@@ -76,10 +83,12 @@ usage_exp="""
 """
 
 basedir = os.path.realpath("%s/.."%(rundir)) # path of the application, i.e. pred/
+path_static = "%s/static"%(basedir)
 path_log = "%s/static/log"%(basedir)
 path_stat = "%s/stat"%(path_log)
 path_result = "%s/static/result"%(basedir)
 path_cache = "%s/static/result/cache"%(basedir)
+name_cachedir = 'cache'
 
 # format of the computenodefile is 
 # each line is a record and contains two items
@@ -89,105 +98,14 @@ computenodefile = "%s/config/computenode.txt"%(basedir)
 gen_errfile = "%s/static/log/%s.err"%(basedir, progname)
 gen_logfile = "%s/static/log/%s.log"%(basedir, progname)
 black_iplist_file = "%s/config/black_iplist.txt"%(basedir)
+finished_date_db = "%s/cached_job_finished_date.sqlite3"%(path_log)
+vip_email_file = "%s/config/vip_email.txt"%(basedir)
 
 def PrintHelp(fpout=sys.stdout):#{{{
     print(usage_short, file=fpout)
     print(usage_ext, file=fpout)
     print(usage_exp, file=fpout)#}}}
 
-def get_job_status(jobid):#{{{
-    status = "";
-    rstdir = "%s/%s"%(path_result, jobid)
-    starttagfile = "%s/%s"%(rstdir, "runjob.start")
-    finishtagfile = "%s/%s"%(rstdir, "runjob.finish")
-    failedtagfile = "%s/%s"%(rstdir, "runjob.failed")
-    if os.path.exists(failedtagfile):
-        status = "Failed"
-    elif os.path.exists(finishtagfile):
-        status = "Finished"
-    elif os.path.exists(starttagfile):
-        status = "Running"
-    elif os.path.exists(rstdir):
-        status = "Wait"
-    return status
-#}}}
-def get_total_seconds(td): #{{{
-    """
-    return the total_seconds for the timedate.timedelta object
-    for python version >2.7 this is not needed
-    """
-    return (td.microseconds + (td.seconds + td.days * 24 * 3600) * 1e6) / 1e6
-#}}}
-def GetNumSuqJob(node):#{{{
-    # get the number of queueing jobs on the node
-    # return -1 if the url is not accessible
-    url = "http://%s/cgi-bin/get_suqlist.cgi?base=log"%(node)
-    try:
-        rtValue = requests.get(url, timeout=2)
-        if rtValue.status_code < 400:
-            lines = rtValue.content.split("\n")
-            cnt_queue_job = 0
-            for line in lines:
-                strs = line.split()
-                if len(strs)>=4 and strs[0].isdigit():
-                    status = strs[2]
-                    if status == "Wait":
-                        cnt_queue_job += 1
-            return cnt_queue_job
-        else:
-            return -1
-    except:
-        date_str = time.strftime("%Y-%m-%d %H:%M:%S")
-        myfunc.WriteFile("[Date: %s] requests.get(%s) failed\n"%(date_str,
-            url), gen_errfile, "a", True)
-        return -1
-
-#}}}
-def IsHaveAvailNode(cntSubmitJobDict):#{{{
-    for node in cntSubmitJobDict:
-        [num_queue_job, max_allowed_job] = cntSubmitJobDict[node]
-        if num_queue_job < max_allowed_job:
-            return True
-    return False
-#}}}
-def GetNumSeqSameUserDict(joblist):#{{{
-# calculate the number of sequences for each user in the queue or running
-# Fixed error for getting numseq at 2015-04-11
-    numseq_user_dict = {}
-    for i in range(len(joblist)):
-        li1 = joblist[i]
-        jobid1 = li1[0]
-        ip1 = li1[3]
-        email1 = li1[4]
-        try:
-            numseq1 = int(li1[5])
-        except:
-            numseq1 = 123
-            pass
-        if not jobid1 in numseq_user_dict:
-            numseq_user_dict[jobid1] = 0
-        numseq_user_dict[jobid1] += numseq1
-        if ip1 == "" and email1 == "":
-            continue
-
-        for j in range(len(joblist)):
-            li2 = joblist[j]
-            if i == j:
-                continue
-
-            jobid2 = li2[0]
-            ip2 = li2[3]
-            email2 = li2[4]
-            try:
-                numseq2 = int(li2[5])
-            except:
-                numseq2 = 123
-                pass
-            if ((ip2 != "" and ip2 == ip1) or
-                    (email2 != "" and email2 == email1)):
-                numseq_user_dict[jobid1] += numseq2
-    return numseq_user_dict
-#}}}
 def CreateRunJoblog(path_result, submitjoblogfile, runjoblogfile,#{{{
         finishedjoblogfile, loop):
     myfunc.WriteFile("CreateRunJoblog...\n", gen_logfile, "a", True)
@@ -1887,6 +1805,9 @@ def main(g_params):#{{{
     loop = 0
     while 1:
 
+        if os.path.exists("%s/CACHE_CLEANING_IN_PROGRESS"%(path_result)):#pause when cache cleaning is in progress
+            continue
+
         # load the config file if exists
         configfile = "%s/config/config.json"%(basedir)
         config = {}
@@ -1900,27 +1821,31 @@ def main(g_params):#{{{
         if os.path.exists(black_iplist_file):
             g_params['blackiplist'] = myfunc.ReadIDList(black_iplist_file)
 
-        date_str = time.strftime("%Y-%m-%d %H:%M:%S")
-        avail_computenode_list = myfunc.ReadIDList2(computenodefile, col=0)
-        num_avail_node = len(avail_computenode_list)
-        if loop == 0:
-            myfunc.WriteFile("[Date: %s] start %s. loop %d\n"%(date_str, progname, loop), gen_logfile, "a", True)
-        else:
-            myfunc.WriteFile("[Date: %s] loop %d\n"%(date_str, loop), gen_logfile, "a", True)
+        avail_computenode = webcom.ReadComputeNode(computenodefile) # return value is a dict
+        g_params['vip_user_list'] = myfunc.ReadIDList2(vip_email_file,  col=0)
+        num_avail_node = len(avail_computenode)
 
-        CreateRunJoblog(path_result, submitjoblogfile, runjoblogfile,
-                finishedjoblogfile, loop)
+        webcom.loginfo("loop %d"%(loop), gen_logfile)
+
+        isOldRstdirDeleted = False
+        if loop % g_params['STATUS_UPDATE_FREQUENCY'][0] == g_params['STATUS_UPDATE_FREQUENCY'][1]:
+            qdcom.RunStatistics_basic(webserver_root, gen_logfile, gen_errfile)
+            isOldRstdirDeleted = webcom.DeleteOldResult(path_result, path_log,
+                    gen_logfile, MAX_KEEP_DAYS=g_params['MAX_KEEP_DAYS'])
+            webcom.CleanServerFile(path_static, gen_logfile, gen_errfile)
+            webcom.CleanCachedResult(path_static, name_cachedir,  gen_logfile, gen_errfile)
+
+        webcom.ArchiveLogFile(path_log, threshold_logfilesize=threshold_logfilesize) 
+
+        qdcom.CreateRunJoblog(loop, isOldRstdirDeleted, g_params)
 
         # Get number of jobs submitted to the remote server based on the
         # runjoblogfile
         runjobidlist = myfunc.ReadIDList2(runjoblogfile,0)
         remotequeueDict = {}
-        for node in avail_computenode_list:
+        for node in avail_computenode:
             remotequeueDict[node] = []
         for jobid in runjobidlist:
-            lock_file = "%s/%s/%s"%(path_result, jobid, "runjob.lock")
-            if os.path.exists(lock_file):
-                continue
             rstdir = "%s/%s"%(path_result, jobid)
             remotequeue_idx_file = "%s/remotequeue_seqindex.txt"%(rstdir)
             if os.path.exists(remotequeue_idx_file):
@@ -1935,26 +1860,18 @@ def main(g_params):#{{{
                             remotequeueDict[node].append(remotejobid)
 
 
-        if loop % 100 == 1:
-            RunStatistics(path_result, path_log)
-            DeleteOldResult(path_result, path_log)
-
-        if os.path.exists(gen_logfile):
-            myfunc.ArchiveFile(gen_logfile, threshold_logfilesize)
-        if os.path.exists(gen_errfile):
-            myfunc.ArchiveFile(gen_errfile, threshold_logfilesize)
         # For finished jobs, clean data not used for caching
 
         cntSubmitJobDict = {} # format of cntSubmitJobDict {'node_ip': INT, 'node_ip': INT}
-        for node in avail_computenode_list:
-            #num_queue_job = GetNumSuqJob(node)
+        for node in avail_computenode:
+            queue_method = avail_computenode[node]['queue_method']
             num_queue_job = len(remotequeueDict[node])
             if num_queue_job >= 0:
                 cntSubmitJobDict[node] = [num_queue_job,
-                        g_params['MAX_SUBMIT_JOB_PER_NODE']] #[num_queue_job, max_allowed_job]
+                        g_params['MAX_SUBMIT_JOB_PER_NODE'], queue_method] #[num_queue_job, max_allowed_job]
             else:
                 cntSubmitJobDict[node] = [g_params['MAX_SUBMIT_JOB_PER_NODE'],
-                        g_params['MAX_SUBMIT_JOB_PER_NODE']] #[num_queue_job, max_allowed_job]
+                        g_params['MAX_SUBMIT_JOB_PER_NODE'], queue_method] #[num_queue_job, max_allowed_job]
 
 # entries in runjoblogfile includes jobs in queue or running
         hdl = myfunc.ReadLineByBlock(runjoblogfile)
@@ -1980,24 +1897,27 @@ def main(g_params):#{{{
                         finishtagfile = "%s/%s"%(rstdir, "runjob.finish")
                         status = strs[1]
 
-                        lock_file = "%s/%s/%s.lock"%(path_result, jobid, "runjob.lock")
-                        if os.path.exists(lock_file):
+
+                        webcom.loginfo("CompNodeStatus: %s"%(str(cntSubmitJobDict)), gen_logfile)
+
+                        runjob_lockfile = "%s/%s/%s.lock"%(path_result, jobid, "runjob.lock")
+                        if os.path.exists(runjob_lockfile):
+                            msg = "runjob_lockfile %s exists, ignore the job %s" %(runjob_lockfile, jobid)
+                            webcom.loginfo(msg, gen_logfile)
                             continue
 
-                        myfunc.WriteFile("CompNodeStatus: %s\n"%(str(cntSubmitJobDict)), gen_logfile, "a", True)
-                        if IsHaveAvailNode(cntSubmitJobDict):
+                        if webcom.IsHaveAvailNode(cntSubmitJobDict):
                             if not g_params['DEBUG_NO_SUBMIT']:
-                                SubmitJob(jobid, cntSubmitJobDict, numseq_this_user)
-                        GetResult(jobid) # the start tagfile is written when got the first result
-                        CheckIfJobFinished(jobid, numseq, email)
+                                qdcom.SubmitJob(jobid, cntSubmitJobDict, numseq_this_user, g_params)
+                        qdcom.GetResult(jobid, g_params) # the start tagfile is written when got the first result
+                        qdcom.CheckIfJobFinished(jobid, numseq, email, g_params)
 
                 lines = hdl.readlines()
             hdl.close()
 
-        myfunc.WriteFile("sleep for %d seconds\n"%(g_params['SLEEP_INTERVAL']), gen_logfile, "a", True)
+        webcom.loginfo("sleep for %d seconds"%(g_params['SLEEP_INTERVAL']), gen_logfile)
         time.sleep(g_params['SLEEP_INTERVAL'])
         loop += 1
-
 
     return 0
 #}}}
@@ -2016,6 +1936,18 @@ def InitGlobalParameter():#{{{
     g_params['MAX_RESUBMIT'] = 2
     g_params['MAX_SUBMIT_TRY'] = 3
     g_params['MAX_TIME_IN_REMOTE_QUEUE'] = 3600*24 # one day in seconds
+    g_params['name_server'] = "PathoPred"
+    g_params['path_static'] = path_static
+    g_params['path_result'] = path_result
+    g_params['path_log'] = path_log
+    g_params['path_cache'] = path_cache
+    g_params['vip_email_file'] = vip_email_file
+    g_params['gen_logfile'] = gen_logfile
+    g_params['finished_date_db'] = finished_date_db
+    g_params['gen_errfile'] = gen_errfile
+    g_params['contact_email'] = contact_email
+    g_params['name_cachedir'] = name_cachedir
+    g_params['TZ'] = TZ
     return g_params
 #}}}
 if __name__ == '__main__' :
