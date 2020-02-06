@@ -97,11 +97,11 @@ from django.template import Context, loader
 
 def index(request):#{{{
     if not os.path.exists(path_result):
-        os.mkdir(path_result, 0755)
+        os.mkdir(path_result, 0o755)
     if not os.path.exists(path_result):
-        os.mkdir(path_tmp, 0755)
+        os.mkdir(path_tmp, 0o755)
     if not os.path.exists(path_md5):
-        os.mkdir(path_md5, 0755)
+        os.mkdir(path_md5, 0o755)
     base_www_url_file = "%s/static/log/base_www_url.txt"%(SITE_ROOT)
     if not os.path.exists(base_www_url_file):
         base_www_url = "http://" + request.META['HTTP_HOST']
@@ -327,7 +327,7 @@ def submit_seq(request):#{{{
 
             try:
                 seqfile = request.FILES['seqfile']
-            except KeyError, MultiValueDictKeyError:
+            except KeyError as MultiValueDictKeyError:
                 seqfile = ""
             date = time.strftime("%Y-%m-%d %H:%M:%S")
             query = {}
@@ -572,7 +572,7 @@ def GetNumSameUserInQueue(rstdir, host_ip, email):#{{{
     myfunc.WriteFile("cmdline: " + cmdline +"\n", logfile, "a")
     try:
         suq_ls_content =  myfunc.check_output(cmd, stderr=subprocess.STDOUT)
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         myfunc.WriteFile(str(e) +"\n", logfile, "a")
         return numseq_this_user
 
@@ -590,8 +590,8 @@ def RunQuery(request, query):#{{{
     errmsg = []
     tmpdir = tempfile.mkdtemp(prefix="%s/static/tmp/tmp_"%(SITE_ROOT))
     rstdir = tempfile.mkdtemp(prefix="%s/static/result/rst_"%(SITE_ROOT))
-    os.chmod(tmpdir, 0755)
-    os.chmod(rstdir, 0755)
+    os.chmod(tmpdir, 0o755)
+    os.chmod(rstdir, 0o755)
     jobid = os.path.basename(rstdir)
     query['jobid'] = jobid
 
@@ -643,8 +643,8 @@ def RunQuery_wsdl(rawseq, filtered_seq, seqinfo):#{{{
     errmsg = []
     tmpdir = tempfile.mkdtemp(prefix="%s/static/tmp/tmp_"%(SITE_ROOT))
     rstdir = tempfile.mkdtemp(prefix="%s/static/result/rst_"%(SITE_ROOT))
-    os.chmod(tmpdir, 0755)
-    os.chmod(rstdir, 0755)
+    os.chmod(tmpdir, 0o755)
+    os.chmod(rstdir, 0o755)
     jobid = os.path.basename(rstdir)
     seqinfo['jobid'] = jobid
     numseq = seqinfo['numseq']
@@ -683,8 +683,8 @@ def RunQuery_wsdl_local(rawseq, filtered_seq, seqinfo):#{{{
     errmsg = []
     tmpdir = tempfile.mkdtemp(prefix="%s/static/tmp/tmp_"%(SITE_ROOT))
     rstdir = tempfile.mkdtemp(prefix="%s/static/result/rst_"%(SITE_ROOT))
-    os.chmod(tmpdir, 0755)
-    os.chmod(rstdir, 0755)
+    os.chmod(tmpdir, 0o755)
+    os.chmod(rstdir, 0o755)
     jobid = os.path.basename(rstdir)
     seqinfo['jobid'] = jobid
     numseq = seqinfo['numseq']
@@ -743,7 +743,7 @@ def SubmitQueryToLocalQueue(query, tmpdir, rstdir, isOnlyGetCache=False):#{{{
         rmsg = myfunc.check_output(cmd, stderr=subprocess.STDOUT)
         myfunc.WriteFile("cmdline: " + cmdline +"\n", debugfile, "a", True)
         myfunc.WriteFile(rmsg+"\n", debugfile, "a", True)
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         failtagfile = "%s/%s"%(rstdir, "runjob.failed")
         if not os.path.exists(failtagfile):
             date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -1540,7 +1540,7 @@ def get_serverstatus(request):#{{{
             if line.find("runjob") != -1:
                 cntjob += 1
         num_seq_in_local_queue = cntjob
-    except subprocess.CalledProcessError, e:
+    except subprocess.CalledProcessError as e:
         datetime = time.strftime("%Y-%m-%d %H:%M:%S")
         myfunc.WriteFile("[%s] %s\n"%(datetime, str(e)), gen_errfile, "a", True)
 
@@ -1654,9 +1654,9 @@ def get_serverstatus(request):#{{{
     # get most active users by num_job
     activeuserli_njob_header = ["IP", "Country", "NumJob", "NumSeq"]
     activeuserli_njob = []
-    rawlist = sorted(user_dict.items(), key=lambda x:x[1][0], reverse=True)
+    rawlist = sorted(list(user_dict.items()), key=lambda x:x[1][0], reverse=True)
     cnt = 0
-    for i in xrange(len(rawlist)):
+    for i in range(len(rawlist)):
         cnt += 1
         ip = rawlist[i][0]
         njob = rawlist[i][1][0]
@@ -1674,9 +1674,9 @@ def get_serverstatus(request):#{{{
     # get most active users by num_seq
     activeuserli_nseq_header = ["IP", "Country", "NumJob", "NumSeq"]
     activeuserli_nseq = []
-    rawlist = sorted(user_dict.items(), key=lambda x:x[1][1], reverse=True)
+    rawlist = sorted(list(user_dict.items()), key=lambda x:x[1][1], reverse=True)
     cnt = 0
-    for i in xrange(len(rawlist)):
+    for i in range(len(rawlist)):
         cnt += 1
         ip = rawlist[i][0]
         njob = rawlist[i][1][0]
@@ -1837,7 +1837,7 @@ def help_wsdl_api(request):#{{{
     api_script_lang_list = ["Python"]
     api_script_info_list = []
 
-    for i in xrange(len(extlist)):
+    for i in range(len(extlist)):
         ext = extlist[i]
         api_script_file = "%s/%s/%s"%(SITE_ROOT,
                 "static/download/script", "%s%s"%(api_script_rtname,
@@ -1848,7 +1848,7 @@ def help_wsdl_api(request):#{{{
         cmd = [api_script_file, "-h"]
         try:
             usage = myfunc.check_output(cmd)
-        except subprocess.CalledProcessError, e:
+        except subprocess.CalledProcessError as e:
             usage = ""
         api_script_info_list.append([api_script_lang_list[i], api_script_basename, usage])
 
@@ -2119,7 +2119,7 @@ def get_results(request, jobid="1"):#{{{
                         for pred_line in prediction_lines:
                             if pred_line == "": continue
                             print(pred_line)
-                            print(pred_line.split('\t'))
+                            print((pred_line.split('\t')))
                             pred_identifier = pred_line.split('\t')[0]
                             pred_variant = pred_line.split('\t')[1]
                             pred_class = pred_line.split('\t')[2]

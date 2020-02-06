@@ -17,7 +17,7 @@ wspace = ''.join([" "]*len(progname))
 rundir = os.path.dirname(os.path.realpath(__file__))
 webserver_root = os.path.realpath("%s/../../../"%(rundir))
 activate_env="%s/env/bin/activate_this.py"%(webserver_root)
-execfile(activate_env, dict(__file__=activate_env))
+exec(compile(open(activate_env, "rb").read(), activate_env, 'exec'), dict(__file__=activate_env))
 
 site.addsitedir("%s/env/lib/python2.7/site-packages/"%(webserver_root))
 sys.path.append("/usr/local/lib/python2.7/dist-packages")
@@ -63,9 +63,9 @@ Examples:
 """%(progname)
 
 def PrintHelp(fpout=sys.stdout):#{{{
-    print >> fpout, usage_short
-    print >> fpout, usage_ext
-    print >> fpout, usage_exp#}}}
+    print(usage_short, file=fpout)
+    print(usage_ext, file=fpout)
+    print(usage_exp, file=fpout)#}}}
 
 def RunJob(infile, outpath, tmpdir, email, jobid, g_params):#{{{
     all_begin_time = time.time()
@@ -190,7 +190,7 @@ def RunJob(infile, outpath, tmpdir, email, jobid, g_params):#{{{
         del dumplist
 
 
-        sortedlist = sorted(toRunDict.items(), key=lambda x:x[1][1], reverse=True)
+        sortedlist = sorted(list(toRunDict.items()), key=lambda x:x[1][1], reverse=True)
         #format of sortedlist [(origIndex: [seq, numTM, description]), ...]
 
         # submit sequences one by one to the workflow according to orders in
@@ -228,7 +228,7 @@ def RunJob(infile, outpath, tmpdir, email, jobid, g_params):#{{{
             try:
                 rmsg = subprocess.check_output(cmd)
                 g_params['runjob_log'].append("workflow:\n"+rmsg+"\n")
-            except subprocess.CalledProcessError, e:
+            except subprocess.CalledProcessError as e:
                 g_params['runjob_err'].append(str(e)+"\n")
                 g_params['runjob_err'].append("cmdline: "+ cmdline +"\n")
                 g_params['runjob_err'].append(rmsg + "\n")
@@ -248,7 +248,7 @@ def RunJob(infile, outpath, tmpdir, email, jobid, g_params):#{{{
                 try:
                     subprocess.check_output(cmd)
                     isCmdSuccess = True
-                except subprocess.CalledProcessError, e:
+                except subprocess.CalledProcessError as e:
                     msg =  "Failed to run prediction for sequence No. %d\n"%(origIndex)
                     g_params['runjob_err'].append(msg)
                     g_params['runjob_err'].append(str(e)+"\n")
@@ -308,7 +308,7 @@ def RunJob(infile, outpath, tmpdir, email, jobid, g_params):#{{{
                             g_params['runjob_log'].append("cmdline: %s"%(cmdline))
                             try:
                                 subprocess.check_call(cmd)
-                            except CalledProcessError,e:
+                            except CalledProcessError as e:
                                 g_params['runjob_err'].append(str(e)+"\n")
 
 
@@ -342,7 +342,7 @@ def RunJob(infile, outpath, tmpdir, email, jobid, g_params):#{{{
         cmd = ["zip", "-rq", zipfile, resultpathname]
         try:
             subprocess.check_output(cmd)
-        except subprocess.CalledProcessError, e:
+        except subprocess.CalledProcessError as e:
             g_params['runjob_err'].append(str(e))
             pass
 
@@ -450,14 +450,14 @@ def main(g_params):#{{{
                 g_params['isOnlyGetCache'] = True
                 i += 1
             else:
-                print >> sys.stderr, "Error! Wrong argument:", argv[i]
+                print("Error! Wrong argument:", argv[i], file=sys.stderr)
                 return 1
         else:
             infile = argv[i]
             i += 1
 
     if jobid == "":
-        print >> sys.stderr, "%s: jobid not set. exit"%(sys.argv[0])
+        print("%s: jobid not set. exit"%(sys.argv[0]), file=sys.stderr)
         return 1
 
     g_params['jobid'] = jobid
@@ -470,29 +470,29 @@ def main(g_params):#{{{
     try:
         fcntl.lockf(fp, fcntl.LOCK_EX | fcntl.LOCK_NB)
     except IOError:
-        print >> sys.stderr, "Another instance of %s is running"%(progname)
+        print("Another instance of %s is running"%(progname), file=sys.stderr)
         return 1
 
 
     if myfunc.checkfile(infile, "infile") != 0:
         return 1
     if outpath == "":
-        print >> sys.stderr, "outpath not set. exit"
+        print("outpath not set. exit", file=sys.stderr)
         return 1
     elif not os.path.exists(outpath):
         try:
             subprocess.check_output(["mkdir", "-p", outpath])
-        except subprocess.CalledProcessError, e:
-            print >> sys.stderr, e
+        except subprocess.CalledProcessError as e:
+            print(e, file=sys.stderr)
             return 1
     if tmpdir == "":
-        print >> sys.stderr, "tmpdir not set. exit"
+        print("tmpdir not set. exit", file=sys.stderr)
         return 1
     elif not os.path.exists(tmpdir):
         try:
             subprocess.check_output(["mkdir", "-p", tmpdir])
-        except subprocess.CalledProcessError, e:
-            print >> sys.stderr, e
+        except subprocess.CalledProcessError as e:
+            print(e, file=sys.stderr)
             return 1
 
     numseq = myfunc.CountFastaSeq(infile)

@@ -204,7 +204,7 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
                     "The maximum allowable number of sequences of a job is %d. "\
                     "However, your input has %d sequences."%(g_params['MAX_NUMSEQ_FOR_FORCE_RUN'], numseq)
             seqinfo['isValidSeq'] = False
-        for i in xrange(numseq):
+        for i in range(numseq):
             seq = seqRecordList[i][2].strip()
             anno = seqRecordList[i][1].strip().replace('\t', ' ')
             seqid = seqRecordList[i][0].strip()
@@ -212,7 +212,7 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
             seq = re.sub("[\s\n\r\t]", '', seq)
             li1 = [m.start() for m in re.finditer("[^ABCDEFGHIKLMNPQRSTUVWYZX*-]", seq)]
             if len(li1) > 0:
-                for j in xrange(len(li1)):
+                for j in range(len(li1)):
                     msg = "Bad letter for amino acid in sequence %s (SeqNo. %d) "\
                             "at position %d (letter: '%s')"%(seqid, i+1,
                                     li1[j]+1, seq[li1[j]])
@@ -229,7 +229,7 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
 # *, - will be deleted
 # 
         li_newseq = []
-        for i in xrange(numseq):
+        for i in range(numseq):
             seq = seqRecordList[i][2].strip()
             anno = seqRecordList[i][1].strip()
             seqid = seqRecordList[i][0].strip()
@@ -240,7 +240,7 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
 
             li1 = [m.start() for m in re.finditer("[BZ]", seq)]
             if len(li1) > 0:
-                for j in xrange(len(li1)):
+                for j in range(len(li1)):
                     msg = "Amino acid in sequence %s (SeqNo. %d) at position %d "\
                             "(letter: '%s') has been replaced by 'X'"%(seqid,
                                     i+1, li1[j]+1, seq[li1[j]])
@@ -249,7 +249,7 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
 
             li1 = [m.start() for m in re.finditer("[U]", seq)]
             if len(li1) > 0:
-                for j in xrange(len(li1)):
+                for j in range(len(li1)):
                     msg = "Amino acid in sequence %s (SeqNo. %d) at position %d "\
                             "(letter: '%s') has been replaced by 'C'"%(seqid,
                                     i+1, li1[j]+1, seq[li1[j]])
@@ -258,7 +258,7 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
 
             li1 = [m.start() for m in re.finditer("[*]", seq)]
             if len(li1) > 0:
-                for j in xrange(len(li1)):
+                for j in range(len(li1)):
                     msg = "Translational stop in sequence %s (SeqNo. %d) at position %d "\
                             "(letter: '%s') has been deleted"%(seqid,
                                     i+1, li1[j]+1, seq[li1[j]])
@@ -267,7 +267,7 @@ def ValidateSeq(rawseq, seqinfo, g_params):#{{{
 
             li1 = [m.start() for m in re.finditer("[-]", seq)]
             if len(li1) > 0:
-                for j in xrange(len(li1)):
+                for j in range(len(li1)):
                     msg = "Gap in sequence %s (SeqNo. %d) at position %d "\
                             "(letter: '%s') has been deleted"%(seqid,
                                     i+1, li1[j]+1, seq[li1[j]])
