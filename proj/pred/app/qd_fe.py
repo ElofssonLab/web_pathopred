@@ -1936,6 +1936,9 @@ def InitGlobalParameter():#{{{
     g_params['MAX_RESUBMIT'] = 2
     g_params['MAX_SUBMIT_TRY'] = 3
     g_params['MAX_TIME_IN_REMOTE_QUEUE'] = 3600*24 # one day in seconds
+    g_params['STATUS_UPDATE_FREQUENCY'] = [500, 50]  # updated by if loop%$1 == $2
+    g_params['FORMAT_DATETIME'] = webcom.FORMAT_DATETIME
+    g_params['UPPER_WAIT_TIME_IN_SEC'] = 60
     g_params['name_server'] = "PathoPred"
     g_params['path_static'] = path_static
     g_params['path_result'] = path_result
@@ -1952,9 +1955,7 @@ def InitGlobalParameter():#{{{
 #}}}
 if __name__ == '__main__' :
     g_params = InitGlobalParameter()
-
-    date_str = time.strftime("%Y-%m-%d %H:%M:%S")
-    print("\n\n[Date: %s]\n"%(date_str), file=sys.stderr)
-    status = main(g_params)
-
-    sys.exit(status)
+    date_str = time.strftime(g_params['FORMAT_DATETIME'])
+    print("\n#%s#\n[Date: %s] qd_fe.py restarted"%('='*80,date_str))
+    sys.stdout.flush()
+    sys.exit(main(g_params))
