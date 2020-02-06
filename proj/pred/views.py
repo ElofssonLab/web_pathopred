@@ -76,6 +76,7 @@ g_params['AVERAGE_RUNTIME_PER_SEQ_IN_SEC']  = 120
 g_params['MAX_ROWS_TO_SHOW_IN_TABLE']  = 2000
 g_params['MIN_LEN_SEQ']  = 10      # minimum length of the query sequence
 g_params['MAX_LEN_SEQ']  = 10000   # maximum length of the query sequence
+g_params['MAX_NUMSEQ_PER_JOB']  = 200
 g_params['MAXSIZE_UPLOAD_FILE_IN_BYTE']  = g_params['MAXSIZE_UPLOAD_FILE_IN_MB'] * 1024*1024
 g_params['DEBUG'] = False
 g_params['FORMAT_DATETIME'] = webcom.FORMAT_DATETIME
@@ -271,14 +272,14 @@ def submit_seq(request):#{{{
             query['email'] = email
             query['jobname'] = jobname
             query['date'] = date_str
-            query['client_ip'] = client_ip
+            query['client_ip'] = info['client_ip']
             query['errinfo'] = ""
             query['method_submission'] = "web"
             query['Nfix'] = Nfix
             query['Cfix'] = Cfix
             query['fix_str'] = fix_str
             query['isForceRun'] = isForceRun
-            query['username'] = username
+            query['username'] = info['username']
             query['STATIC_URL'] = settings.STATIC_URL
 
             is_valid = webcom.ValidateQuery(request, query, g_params)
@@ -296,10 +297,10 @@ def submit_seq(request):#{{{
                 myfunc.WriteFile(log_record, main_logfile_query, "a")
 
                 divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                        "static/log/divided", "%s_submitted_seq.log"%(client_ip))
+                        "static/log/divided", "%s_submitted_seq.log"%(info['client_ip']))
                 divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                        "static/log/divided", "%s_finished_job.log"%(client_ip))
-                if client_ip != "":
+                        "static/log/divided", "%s_finished_job.log"%(info['client_ip']))
+                if query['client_ip'] != "":
                     myfunc.WriteFile(log_record, divided_logfile_query, "a")
 
 
