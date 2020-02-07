@@ -578,100 +578,15 @@ def get_serverstatus(request):# {{{
     return render(request, 'pred/serverstatus.html', info)
 # }}}
 
-#Not available for pathopred
-def help_wsdl_api(request):#{{{
-    info = {}
-
-    username = request.user.username
-    client_ip = request.META['REMOTE_ADDR']
-    if username in settings.SUPER_USER_LIST:
-        isSuperUser = True
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "submitted_seq.log")
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "finished_job.log")
-    else:
-        isSuperUser = False
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_submitted_seq.log"%(client_ip))
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_finished_job.log"%(client_ip))
-
-    info['username'] = username
-    info['isSuperUser'] = isSuperUser
-    info['client_ip'] = client_ip
-
-
-    api_script_rtname =  "pathopred_wsdl"
-    extlist = [".py"]
-    api_script_lang_list = ["Python"]
-    api_script_info_list = []
-
-    for i in range(len(extlist)):
-        ext = extlist[i]
-        api_script_file = "%s/%s/%s"%(SITE_ROOT,
-                "static/download/script", "%s%s"%(api_script_rtname,
-                    ext))
-        api_script_basename = os.path.basename(api_script_file)
-        if not os.path.exists(api_script_file):
-            continue
-        cmd = [api_script_file, "-h"]
-        try:
-            usage = myfunc.check_output(cmd)
-        except subprocess.CalledProcessError as e:
-            usage = ""
-        api_script_info_list.append([api_script_lang_list[i], api_script_basename, usage])
-
-    info['api_script_info_list'] = api_script_info_list
-    info['jobcounter'] = GetJobCounter(client_ip, isSuperUser,
-            divided_logfile_query, divided_logfile_finished_jobid)
-
-    info['STATIC_URL'] = settings.STATIC_URL
+def help_wsdl_api(request):# {{{
+    g_params['api_script_rtname'] =  "subcons_wsdl"
+    info = webcom.help_wsdl_api(request, g_params)
     return render(request, 'pred/help_wsdl_api.html', info)
-#}}}
+# }}}
 def download(request):#{{{
     info = {}
-
-    username = request.user.username
-    client_ip = request.META['REMOTE_ADDR']
-    if username in settings.SUPER_USER_LIST:
-        isSuperUser = True
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "submitted_seq.log")
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log", "finished_job.log")
-    else:
-        isSuperUser = False
-        divided_logfile_query =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_submitted_seq.log"%(client_ip))
-        divided_logfile_finished_jobid =  "%s/%s/%s"%(SITE_ROOT,
-                "static/log/divided", "%s_finished_job.log"%(client_ip))
-
-    info['username'] = username
-    info['isSuperUser'] = isSuperUser
-    info['client_ip'] = client_ip
-    info['zipfile_wholepackage'] = ""
-    info['zipfile_database'] = ""
-    info['size_wholepackage'] = ""
-    info['size_database'] = ""
-    size_wholepackage = 0
-    zipfile_wholepackage = "%s/%s/%s"%(SITE_ROOT, "static/download", "topcons2.0_Linux_x64_with_database.zip")
-    zipfile_database = "%s/%s/%s"%(SITE_ROOT, "static/download", "topcons2_database.zip")
-    if os.path.exists(zipfile_wholepackage):
-        info['zipfile_wholepackage'] = os.path.basename(zipfile_wholepackage)
-        size_wholepackage = os.path.getsize(os.path.realpath(zipfile_wholepackage))
-        size_wholepackage_str = myfunc.Size_byte2human(size_wholepackage)
-        info['size_wholepackage'] = size_wholepackage_str
-    if os.path.exists(zipfile_database):
-        info['zipfile_database'] = os.path.basename(zipfile_database)
-        size_database = os.path.getsize(os.path.realpath(zipfile_database))
-        size_database_str = myfunc.Size_byte2human(size_database)
-        info['size_database'] = size_database_str
-
-    info['jobcounter'] = GetJobCounter(client_ip, isSuperUser,
-            divided_logfile_query, divided_logfile_finished_jobid)
-
-    info['STATIC_URL'] = settings.STATIC_URL
+    webcom.set_basic_config(request, info, g_params)
+    info['jobcounter'] = webcom.GetJobCounter(info)
     return render(request, 'pred/download.html', info)
 #}}}
 
